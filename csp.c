@@ -6,10 +6,11 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 20:04:33 by rymuller          #+#    #+#             */
-/*   Updated: 2019/02/24 20:06:29 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/02/26 18:34:43 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "ft_printf.h"
 
 void	ft_putchar(va_list arg, t_specifier *specifier)
@@ -78,10 +79,19 @@ void	ft_putstr(va_list arg, t_specifier *specifier)
 		}
 		else
 		{
+			j = i;
 			while (i++ < specifier->width)
 				write(1, " ", 1);
-			write(1, str, i);
+			write(1, str, j);
 		}
 	}
+}
 
+void	ft_putadr(va_list arg, t_specifier *specifier)
+{
+	size_t			num;
+
+	num = va_arg(arg, size_t);
+	write(1, "0x", 2);
+	ft_atoi_base(num, 16);
 }

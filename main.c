@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 13:12:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/02/24 20:05:39 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/02/26 18:34:40 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,27 @@ static void	specifier_init(t_specifier *specifier)
 	specifier->size[0] = '\0';
 	specifier->size[1] = '\0';
 	specifier->size[2] = '\0';
+}
+
+void		ft_atoi_base(size_t num, int base)
+{
+	int			i;
+	char		*ptr;
+	char		buffer[9];
+
+	if (num == 0)
+		write(1, "0", 1);
+	ptr = buffer + 8;
+	*ptr = '\0';
+	while (num != 0)
+	{
+		*--ptr = "0123456789abcdef"[num % base];
+		num /= base;
+	}
+	i = 0;
+	while (*(ptr + i))
+		i++;
+	write(1, ptr, i);
 }
 
 void		ft_printf(const char *format, ...)
@@ -64,8 +85,11 @@ void		ft_printf(const char *format, ...)
 
 int			main(void)
 {
-//	ft_printf("fre%20cd\ncot", 'a');
-	ft_printf("%-10s", "alarm");
-//	printf("%-6s", "alarm");
+//	int		a = 0;
+
+//	printf("|%023p|\n", -234);
+//	ft_printf("|%023p|\n", -234);
+	printf("|%20s|\n", "999999999999999999");
+	ft_printf("|%20s|\n", "99999999999999999999");
 	return (0);
 }
