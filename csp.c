@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 20:04:33 by rymuller          #+#    #+#             */
-/*   Updated: 2019/02/26 18:34:43 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/02/27 13:45:10 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	ft_putchar(va_list arg, t_specifier *specifier)
 
 void	ft_putstr(va_list arg, t_specifier *specifier)
 {
-	unsigned int	i;
-	unsigned int	j;
-	char			*str;
+	int		i;
+	int		j;
+	char	*str;
 
 	i = 0;
 	str = va_arg(arg, char *);
@@ -89,9 +89,38 @@ void	ft_putstr(va_list arg, t_specifier *specifier)
 
 void	ft_putadr(va_list arg, t_specifier *specifier)
 {
-	size_t			num;
+	int		i;
+	int		j;
+	size_t	num;
+	char	*ptr;
+	char	buffer[9];
 
 	num = va_arg(arg, size_t);
-	write(1, "0x", 2);
-	ft_atoi_base(num, 16);
+	ptr = ft_atoi_base(num, 16, buffer);
+	i = 0;
+	while (*(ptr + i))
+		i++;
+	if (specifier->minus)
+	{
+		write(1, "0x", 2);
+		write(1, ptr, i);
+		while (i++ < specifier->width - 2)
+			write(1, " ", 1);
+	}
+	else if (!specifier->minus)
+	{
+		j = i;
+		if (specifier->null && !specifier->dot)
+			write(1, "0x", 2);
+		while (j++ < specifier->width - 2)
+		{
+			if (specifier->null && !specifier->dot)
+				write(1, "0", 1);
+			else
+				write(1, " ", 1);
+		}
+		if (!(specifier->null && !specifier->dot))
+			write(1, "0x", 2);
+		write(1, ptr, i);
+	}
 }

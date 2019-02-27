@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/02/26 17:42:20 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/02/27 12:53:08 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,23 @@
 # include <stdarg.h>
 # include <unistd.h>
 
-typedef struct		s_specifier
+typedef struct	s_specifier
 {
-	unsigned int	minus:1;
-	unsigned int	plus:1;
-	unsigned int	null:1;
-	unsigned int	space:1;
-	unsigned int	sharp:1;
-	unsigned int	width;
-	unsigned int	dot:1;
-	unsigned int	precision;
-	char			size[3];
-}					t_specifier;
+	int			minus:1;
+	int			plus:1;
+	int			null:1;
+	int			space:1;
+	int			sharp:1;
+	int			width;
+	int			dot:1;
+	int			precision;
+	char		size[3];
+}				t_specifier;
 
-void				ft_atoi_base(size_t num, int base);
-void				ft_putadr(va_list arg, t_specifier *specifier);
-void				ft_putstr(va_list arg, t_specifier *specifier);
-void				ft_putchar(va_list arg, t_specifier *specifier);
-char				*specifier_parse(char *format, t_specifier *specifier, va_list arg);
+void			ft_putadr(va_list arg, t_specifier *specifier);
+void			ft_putstr(va_list arg, t_specifier *specifier);
+void			ft_putchar(va_list arg, t_specifier *specifier);
+char			*ft_atoi_base(size_t num, int base, char *buffer);
+char			*specifier_parse(char *format, t_specifier *specifier, va_list arg);
 
 #endif

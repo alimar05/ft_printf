@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 16:46:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/02/26 18:12:49 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/02/27 13:51:08 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,11 @@ static char	*specifier_size(char *format, t_specifier *specifier)
 	else if (*format == 'l')
 	{
 		specifier->size[0] = 'l';
+		return (format + 1);
+	}
+	else if (*format == 'L')
+	{
+		specifier->size[0] = 'L';
 		return (format + 1);
 	}
 	return (format);
