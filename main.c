@@ -28,7 +28,7 @@ static void	specifier_init(t_specifier *specifier)
 	specifier->size[2] = '\0';
 }
 
-char		*ft_atoi_base(size_t num, int base, char *buffer)
+char		*ft_itoa_base(size_t num, size_t base, char *buffer)
 {
 	char		*ptr;
 
@@ -44,12 +44,13 @@ char		*ft_atoi_base(size_t num, int base, char *buffer)
 	return (ptr);
 }
 
-void		ft_printf(const char *format, ...)
+int		ft_printf(const char *format, ...)
 {
 	va_list		arg;
 	t_specifier	specifier;
 
 	va_start(arg, format);
+	specifier.num_bytes = 0;
 	while (*format)
 	{
 		if (*format == '%')
@@ -62,6 +63,7 @@ void		ft_printf(const char *format, ...)
 		{
 			write(1, format, 1);
 			format++;
+			specifier.num_bytes++;
 		}
 	}
 	/*
@@ -76,13 +78,14 @@ void		ft_printf(const char *format, ...)
 	printf("%s\n", specifier.size);
 	*/
 	va_end(arg);
+	return (specifier.num_bytes);
 }
 
 int			main(void)
 {
-	int		a = 0;
+//	int		a = 0;
 
-	printf("%d\n", printf("%s\n", "2"));
-	ft_printf("%s\n", "2");
+	printf("%d\n", printf("|%lld|", 18111142949672959999));
+	printf("%d\n", ft_printf("|%d|", 18111142949672959999));
 	return (0);
 }

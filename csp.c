@@ -21,20 +21,24 @@ void	ft_putchar(va_list arg, t_specifier *specifier)
 	if (specifier->minus)
 	{
 		write(1, &c, 1);
+		specifier->num_bytes++;
 		while (specifier->width > 1)
 		{
 			write(1, " ", 1);
 			specifier->width--;
+			specifier->num_bytes++;
 		}
 	}
-	if (!specifier->minus)
+	else if (!specifier->minus)
 	{
 		while (specifier->width > 1)
 		{
 			write(1, " ", 1);
 			specifier->width--;
+			specifier->num_bytes++;
 		}
 		write(1, &c, 1);
+		specifier->num_bytes++;
 	}
 }
 
@@ -50,21 +54,32 @@ void	ft_putstr(va_list arg, t_specifier *specifier)
 		i++;
 	if (specifier->dot && !specifier->precision)
 		while (specifier->width--)
+		{
 			write(1, " ", 1);
+			specifier->num_bytes++;
+		}
 	else if (specifier->minus)
 	{
 		if (specifier->dot && specifier->precision)
 		{
 			i = specifier->precision < i ? specifier->precision : i;
 			write(1, str, i);
+			specifier->num_bytes += i;
 			while (i++ < specifier->width)
+			{
 				write(1, " ", 1);
+				specifier->num_bytes++;
+			}
 		}
 		else
 		{
 			write(1, str, i);
+			specifier->num_bytes += i;
 			while (i++ < specifier->width)
+			{
 				write(1, " ", 1);
+				specifier->num_bytes++;
+			}
 		}
 	}
 	else if (!specifier->minus)
@@ -74,15 +89,23 @@ void	ft_putstr(va_list arg, t_specifier *specifier)
 			i = specifier->precision < i ? specifier->precision : i;
 			j = i;
 			while (i++ < specifier->width)
+			{
 				write(1, " ", 1);
+				specifier->num_bytes++;
+			}
 			write(1, str, j);
+			specifier->num_bytes += j;
 		}
 		else
 		{
 			j = i;
 			while (i++ < specifier->width)
+			{
 				write(1, " ", 1);
+				specifier->num_bytes++;
+			}
 			write(1, str, j);
+			specifier->num_bytes += j;
 		}
 	}
 }
@@ -96,7 +119,7 @@ void	ft_putadr(va_list arg, t_specifier *specifier)
 	char	buffer[9];
 
 	num = va_arg(arg, size_t);
-	ptr = ft_atoi_base(num, 16, buffer);
+	ptr = ft_itoa_base(num, 16, buffer);
 	i = 0;
 	while (*(ptr + i))
 		i++;
@@ -104,8 +127,12 @@ void	ft_putadr(va_list arg, t_specifier *specifier)
 	{
 		write(1, "0x", 2);
 		write(1, ptr, i);
+		specifier->num_bytes += i + 2;
 		while (i++ < specifier->width - 2)
+		{
 			write(1, " ", 1);
+			specifier->num_bytes++;
+		}
 	}
 	else if (!specifier->minus)
 	{
@@ -118,9 +145,11 @@ void	ft_putadr(va_list arg, t_specifier *specifier)
 				write(1, "0", 1);
 			else
 				write(1, " ", 1);
+			specifier->num_bytes++;
 		}
 		if (!(specifier->null && !specifier->dot))
 			write(1, "0x", 2);
 		write(1, ptr, i);
+		specifier->num_bytes += i + 2;
 	}
 }

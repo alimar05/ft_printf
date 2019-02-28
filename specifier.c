@@ -91,6 +91,8 @@ static char	*specifier_type(char *format, t_specifier *specifier, va_list arg)
 		ft_putstr(arg, specifier);
 	if (*format == 'p')
 		ft_putadr(arg, specifier);
+	if (*format == 'd')
+		ft_putdec_int(arg, specifier);
 	return (format + 1);
 }
 
