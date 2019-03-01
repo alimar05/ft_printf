@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/01 15:17:56 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/01 15:57:15 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 typedef union		u_num_int
 {
 	short			num_s;
+	char			num_c;
 	int				num_i;
 	long int		num_l;
 	long long int	num_ll;

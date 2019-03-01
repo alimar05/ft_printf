@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 16:46:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/02/27 13:51:08 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/01 15:55:45 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static char	*specifier_type(char *format, t_specifier *specifier, va_list arg)
 		ft_putstr(arg, specifier);
 	if (*format == 'p')
 		ft_putadr(arg, specifier);
-	if (*format == 'd')
+	if (*format == 'd' || *format == 'i')
 		ft_putdec_int(arg, specifier);
 	return (format + 1);
 }
