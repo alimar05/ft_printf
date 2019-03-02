@@ -48,10 +48,8 @@ void	ft_putstr(va_list arg, t_specifier *specifier)
 	int		j;
 	char	*str;
 
-	i = 0;
 	str = va_arg(arg, char *);
-	while (str[i])
-		i++;
+	STRLEN(str, i);
 	if (specifier->dot && !specifier->precision)
 		while (specifier->width--)
 		{
@@ -82,7 +80,7 @@ void	ft_putstr(va_list arg, t_specifier *specifier)
 			}
 		}
 	}
-	else if (!specifier->minus)
+	else
 	{
 		if (specifier->dot && specifier->precision)
 		{
@@ -116,13 +114,11 @@ void	ft_putadr(va_list arg, t_specifier *specifier)
 	int		j;
 	size_t	num;
 	char	*ptr;
-	char	buffer[9];
+	char	buffer[21];
 
 	num = va_arg(arg, size_t);
 	ptr = ft_itoa_base(num, 16, buffer);
-	i = 0;
-	while (*(ptr + i))
-		i++;
+	STRLEN(ptr, i);
 	if (specifier->minus)
 	{
 		write(1, "0x", 2);
@@ -134,7 +130,7 @@ void	ft_putadr(va_list arg, t_specifier *specifier)
 			specifier->num_bytes++;
 		}
 	}
-	else if (!specifier->minus)
+	else
 	{
 		j = i;
 		if (specifier->null && !specifier->dot)

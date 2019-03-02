@@ -66,24 +66,13 @@ int		ft_printf(const char *format, ...)
 			specifier.num_bytes++;
 		}
 	}
-	/*
-	printf("%d\n", specifier.sharp);
-	printf("%d\n", specifier.plus);
-	printf("%d\n", specifier.minus);
-	printf("%d\n", specifier.space);
-	printf("%d\n", specifier.null);
-	printf("%d\n", specifier.width);
-	printf("%d\n", specifier.dot);
-	printf("%d\n", specifier.precision);
-	printf("%s\n", specifier.size);
-	*/
 	va_end(arg);
 	return (specifier.num_bytes);
 }
 
 int			main(void)
 {
-	printf("%d\n", printf("|%20hd|", -18111142));
-	printf("%d\n", ft_printf("|%20hd|", -18111142));
+	printf("%d\n", printf("|%20p|", -18111142));
+	printf("%d\n", ft_printf("|%20p|", -18111142));
 	return (0);
 }
