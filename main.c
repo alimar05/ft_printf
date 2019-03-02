@@ -34,7 +34,7 @@ char		*ft_itoa_base(size_t num, size_t base, char *buffer)
 
 	if (num == 0)
 		return ("0");
-	ptr = buffer + 8;
+	ptr = buffer + 21;
 	*ptr = '\0';
 	while (num != 0)
 	{
@@ -83,9 +83,7 @@ int		ft_printf(const char *format, ...)
 
 int			main(void)
 {
-//	int		a = 0;
-
-	printf("%d\n", printf("|%-20d|", -18111142));
-	printf("%d\n", ft_printf("|%-20d|", -18111142));
+	printf("%d\n", printf("|%20hd|", -18111142));
+	printf("%d\n", ft_printf("|%20hd|", -18111142));
 	return (0);
 }
