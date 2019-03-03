@@ -81,7 +81,7 @@ static void	print_minus(t_specifier *specifier, char *ptr, char *sign, int *i)
 
 static void	print_no_minus(t_specifier *specifier, char *ptr, char *sign, int *i)
 {
-	int	j;
+	int         j;
 
 	if (*sign < 0)
 	{
@@ -100,7 +100,7 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, char *sign, int *i
 	specifier->num_bytes += j;
 }
 
-void	ft_putdec_int(va_list arg, t_specifier *specifier)
+void	    ft_putdec(va_list arg, t_specifier *specifier)
 {
 	int			i;
 	char		*ptr;

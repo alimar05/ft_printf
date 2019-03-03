@@ -72,7 +72,7 @@ int		ft_printf(const char *format, ...)
 
 int			main(void)
 {
-	printf("%d\n", printf("|%20p|", -18111142));
-	printf("%d\n", ft_printf("|%20p|", -18111142));
+	printf("%d\n", printf("|%020o|", -18111142));
+	printf("%d\n", ft_printf("|%020o|", -18111142));
 	return (0);
 }

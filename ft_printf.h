@@ -41,8 +41,9 @@ typedef struct		s_specifier
 
 void				ft_putadr(va_list arg, t_specifier *specifier);
 void				ft_putstr(va_list arg, t_specifier *specifier);
+void				ft_putdec(va_list arg, t_specifier *specifier);
+void				ft_putoct(va_list arg, t_specifier *specifier);
 void				ft_putchar(va_list arg, t_specifier *specifier);
-void				ft_putdec_int(va_list arg, t_specifier *specifier);
 char				*ft_itoa_base(size_t num, size_t base, char *buffer);
 char				*specifier_parse(char *format, t_specifier *specifier,
 		va_list arg);

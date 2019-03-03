@@ -92,7 +92,9 @@ static char	*specifier_type(char *format, t_specifier *specifier, va_list arg)
 	if (*format == 'p')
 		ft_putadr(arg, specifier);
 	if (*format == 'd' || *format == 'i')
-		ft_putdec_int(arg, specifier);
+		ft_putdec(arg, specifier);
+	if (*format == 'o')
+		ft_putoct(arg, specifier);
 	return (format + 1);
 }
 
