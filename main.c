@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 13:12:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/01 17:03:08 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/07 21:05:12 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	specifier_init(t_specifier *specifier)
 	specifier->size[0] = '\0';
 	specifier->size[1] = '\0';
 	specifier->size[2] = '\0';
+	specifier->sign = 1;
 }
 
 char		*ft_itoa_base(size_t num, size_t base, char *buffer)
@@ -72,7 +73,7 @@ int		ft_printf(const char *format, ...)
 
 int			main(void)
 {
-	printf("%d\n", printf("|%-020hd|", -18111142));
-	printf("%d\n", ft_printf("|%-020hd|", -18111142));
+	printf("%d\n", printf("|%20hho|", -1234567890123456789));
+	printf("%d\n", ft_printf("|%20hho|", -1234567890123456789));
 	return (0);
 }
