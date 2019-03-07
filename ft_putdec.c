@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putdec_int.c                                    :+:      :+:    :+:   */
+/*   ft_putdec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -89,9 +89,14 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, char *sign, int *i
 		specifier->num_bytes++;
 	}
 	j = *i;
+    if (specifier->null && *sign < 0)
+        write(1, "-", 1);
 	while ((*i)++ < specifier->width)
 	{
-		write(1, " ", 1);
+        if (specifier->null)
+            write(1, "0", 1);
+        else
+		    write(1, " ", 1);
 		specifier->num_bytes++;
 	}
 	if (*sign < 0)
