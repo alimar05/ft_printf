@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/07 20:58:48 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/08 15:17:21 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ typedef struct				s_specifier
 	int						precision;
 	char					size[3];
 	t_num_int				num_int;
-	unsigned int			base:4;
+	unsigned int			base:5;
 	char					sign:2;
+	unsigned int			is_uns:1;
+	unsigned int			is_upcase:1;
 	int						num_bytes;
 }							t_specifier;
 
@@ -45,15 +47,24 @@ void						ft_putadr(va_list arg, t_specifier *specifier);
 void						ft_putstr(va_list arg, t_specifier *specifier);
 void						ft_putdec(va_list arg, t_specifier *specifier);
 void						ft_putoct(va_list arg, t_specifier *specifier);
+void						ft_putuns(va_list arg, t_specifier *specifier);
+void						ft_puthex(va_list arg, t_specifier *specifier);
 void						ft_putchar(va_list arg, t_specifier *specifier);
-char						*ft_itoa_base(size_t num, size_t base, char *buffer);
-char						*specifier_parse(char *format, t_specifier *specifier,
-		va_list arg);
-char						*null_and_null_size(va_list arg, t_specifier *specifier,
-		char *buffer);
-char						*h_else_hh_size(va_list arg, t_specifier *specifier,
-		char *buffer);
-char						*l_else_ll_size(va_list arg, t_specifier *specifier,
-		char *buffer);
+char						*specifier_size(char *format,
+		t_specifier *specifier);
+void						ft_puthex_upcase(va_list arg,
+		t_specifier *specifier);
+char						*specifier_type(char *format,
+		t_specifier *specifier, va_list arg);
+char						*ft_itoa_base(size_t num, size_t base,
+		char *buffer, char is_upcase);
+char						*specifier_parse(char *format,
+		t_specifier *specifier, va_list arg);
+char						*null_and_null_size(va_list arg,
+		t_specifier *specifier, char *buffer);
+char						*h_else_hh_size(va_list arg,
+		t_specifier *specifier, char *buffer);
+char						*l_else_ll_size(va_list arg,
+		t_specifier *specifier, char *buffer);
 # define STRLEN(ptr, i) i = 0; while (*(ptr + i)) i++
 #endif

@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 13:12:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/07 21:05:12 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/08 15:44:20 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ static void	specifier_init(t_specifier *specifier)
 	specifier->size[1] = '\0';
 	specifier->size[2] = '\0';
 	specifier->sign = 1;
+	specifier->is_uns = 0;
+	specifier->is_upcase = 0;
 }
 
-char		*ft_itoa_base(size_t num, size_t base, char *buffer)
+char		*ft_itoa_base(size_t num, size_t base, char *buffer, char is_upcase)
 {
 	char		*ptr;
 
@@ -39,7 +41,10 @@ char		*ft_itoa_base(size_t num, size_t base, char *buffer)
 	*ptr = '\0';
 	while (num != 0)
 	{
-		*--ptr = "0123456789abcdef"[num % base];
+		if (!is_upcase)
+			*--ptr = "0123456789abcdef"[num % base];
+		else
+			*--ptr = "0123456789ABCDEF"[num % base];
 		num /= base;
 	}
 	return (ptr);
@@ -73,7 +78,7 @@ int		ft_printf(const char *format, ...)
 
 int			main(void)
 {
-	printf("%d\n", printf("|%20hho|", -1234567890123456789));
-	printf("%d\n", ft_printf("|%20hho|", -1234567890123456789));
+	printf("%d\n", printf("|%#020.s|", "1234567890abcdef"));
+	printf("%d\n", ft_printf("|%#020.s|", "1234567890abcdef"));
 	return (0);
 }

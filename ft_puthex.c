@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putoct.c                                        :+:      :+:    :+:   */
+/*   ft_puthex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/07 15:22:46 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/08 14:56:13 by rymuller         ###   ########.fr       */
+/*   Created: 2019/03/08 12:52:42 by rymuller          #+#    #+#             */
+/*   Updated: 2019/03/08 14:56:46 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static void	print_minus(t_specifier *specifier, char *ptr, int *i)
 {
 	if (specifier->sharp)
 	{
-		write(1, "0", 1);
-		specifier->width--;
-		specifier->num_bytes++;
+		write(1, "0x", 2);
+		specifier->width -= 2;
+		specifier->num_bytes += 2;
 	}
 	write(1, ptr, *i);
 	specifier->num_bytes += *i;
@@ -33,12 +33,14 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 {
 	int		j;
 
-	j = *i;
 	if (specifier->sharp)
 	{
-		specifier->width--;
-		specifier->num_bytes++;
+		specifier->width -= 2;
+		specifier->num_bytes += 2;
 	}
+	if (specifier->sharp && specifier->null && !specifier->dot)
+		write(1, "0x", 2);
+	j = *i;
 	while (j++ < specifier->width)
 	{
 		if (specifier->null && !specifier->dot)
@@ -47,21 +49,20 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 			write(1, " ", 1);
 		specifier->num_bytes++;
 	}
-	if (specifier->sharp)
-		write(1, "0", 1);
+	if (specifier->sharp && (!specifier->null || specifier->dot))
+		write(1, "0x", 2);
 	write(1, ptr, *i);
 	specifier->num_bytes += *i;
 }
 
-
-void		ft_putoct(va_list arg, t_specifier *specifier)
+void		ft_puthex(va_list arg, t_specifier *specifier)
 {
 	int		i;
 	char	*ptr;
 	char	buffer[21];
 
 	ptr = NULL;
-	specifier->base = 8;
+	specifier->base = 16;
 	if (specifier->size[0] == '\0' && specifier->size[1] == '\0')
 		ptr = null_and_null_size(arg, specifier, buffer);
 	else if (specifier->size[0] == 'h' && (specifier->size[1] == '\0'

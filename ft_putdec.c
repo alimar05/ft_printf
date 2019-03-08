@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:18:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/07 20:46:21 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/08 14:54:56 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	    ft_putdec(va_list arg, t_specifier *specifier)
 	char	*ptr;
 	char	buffer[21];
 
+	ptr = NULL;
 	specifier->base = 10;
 	if (specifier->size[0] == '\0' && specifier->size[1] == '\0')
 		ptr = null_and_null_size(arg, specifier, buffer);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   specifier.c                                        :+:      :+:    :+:   */
+/*   specifier_parse.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/24 16:46:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/01 15:55:45 by rymuller         ###   ########.fr       */
+/*   Created: 2019/03/08 15:11:53 by rymuller          #+#    #+#             */
+/*   Updated: 2019/03/08 15:12:01 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,53 +49,6 @@ static char	is_specifier_flags(char *format, t_specifier *specifier)
 	else
 		return (0);
 	return (1);
-}
-
-static char	*specifier_size(char *format, t_specifier *specifier)
-{
-	if (*format == 'h' && *(format + 1) == 'h')
-	{
-		specifier->size[0] = 'h';
-		specifier->size[1] = 'h';
-		return (format + 2);
-	}
-	else if (*format == 'h')
-	{
-		specifier->size[0] = 'h';
-		return (format + 1);
-	}
-	else if (*format == 'l' && *(format + 1) == 'l')
-	{
-		specifier->size[0] = 'l';
-		specifier->size[1] = 'l';
-		return (format + 2);
-	}
-	else if (*format == 'l')
-	{
-		specifier->size[0] = 'l';
-		return (format + 1);
-	}
-	else if (*format == 'L')
-	{
-		specifier->size[0] = 'L';
-		return (format + 1);
-	}
-	return (format);
-}
-
-static char	*specifier_type(char *format, t_specifier *specifier, va_list arg)
-{
-	if (*format == 'c')
-		ft_putchar(arg, specifier);
-	if (*format == 's')
-		ft_putstr(arg, specifier);
-	if (*format == 'p')
-		ft_putadr(arg, specifier);
-	if (*format == 'd' || *format == 'i')
-		ft_putdec(arg, specifier);
-	if (*format == 'o')
-		ft_putoct(arg, specifier);
-	return (format + 1);
 }
 
 char		*specifier_parse(char *format, t_specifier *specifier, va_list arg)
