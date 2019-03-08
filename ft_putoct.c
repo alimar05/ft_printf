@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:22:46 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/08 14:56:13 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/08 18:38:18 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 	write(1, ptr, *i);
 	specifier->num_bytes += *i;
 }
-
 
 void		ft_putoct(va_list arg, t_specifier *specifier)
 {

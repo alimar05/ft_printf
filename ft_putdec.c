@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:18:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/08 14:54:56 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/08 18:39:30 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,11 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 		specifier->num_bytes++;
 	}
 	j = *i;
-    if (specifier->null && specifier->sign < 0)
-        write(1, "-", 1);
+	if (specifier->null && specifier->sign < 0)
+		write(1, "-", 1);
 	while ((*i)++ < specifier->width)
 	{
-        if (specifier->null)
-            write(1, "0", 1);
-        else
-		    write(1, " ", 1);
+		specifier->null ? write(1, "0", 1) : write(1, " ", 1);
 		specifier->num_bytes++;
 	}
 	if (!specifier->null && specifier->sign < 0)
@@ -55,7 +52,7 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 	specifier->num_bytes += j;
 }
 
-void	    ft_putdec(va_list arg, t_specifier *specifier)
+void		ft_putdec(va_list arg, t_specifier *specifier)
 {
 	int		i;
 	char	*ptr;

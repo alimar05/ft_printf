@@ -6,45 +6,43 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:06:05 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/08 15:09:42 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/08 19:08:47 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*specifier_size(char *format, t_specifier *specifier)
+static char	*setup_size(t_specifier *specifier, char *format)
+{
+	if (*format == *(format + 1))
+	{
+		specifier->size[0] = *format;
+		specifier->size[1] = *format;
+		return (format + 2);
+	}
+	else
+	{
+		specifier->size[0] = *format;
+		return (format + 1);
+	}
+}
+
+char		*specifier_size(char *format, t_specifier *specifier)
 {
 	if (*format == 'h' && *(format + 1) == 'h')
-	{
-		specifier->size[0] = 'h';
-		specifier->size[1] = 'h';
-		return (format + 2);
-	}
+		return (setup_size(specifier, format));
 	else if (*format == 'h')
-	{
-		specifier->size[0] = 'h';
-		return (format + 1);
-	}
+		return (setup_size(specifier, format));
 	else if (*format == 'l' && *(format + 1) == 'l')
-	{
-		specifier->size[0] = 'l';
-		specifier->size[1] = 'l';
-		return (format + 2);
-	}
+		return (setup_size(specifier, format));
 	else if (*format == 'l')
-	{
-		specifier->size[0] = 'l';
-		return (format + 1);
-	}
+		return (setup_size(specifier, format));
 	else if (*format == 'L')
-	{
-		specifier->size[0] = 'L';
-		return (format + 1);
-	}
+		return (setup_size(specifier, format));
 	return (format);
 }
 
-char	*specifier_type(char *format, t_specifier *specifier, va_list arg)
+char		*specifier_type(char *format, t_specifier *specifier, va_list arg)
 {
 	if (*format == 'c')
 		ft_putchar(arg, specifier);

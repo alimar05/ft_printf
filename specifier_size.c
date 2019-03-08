@@ -6,11 +6,20 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:07:27 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/08 14:14:28 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/08 19:40:07 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static void	ft_abs(t_specifier *specifier)
+{
+	if (specifier->num_int.num_i < 0)
+	{
+		specifier->sign = -1;
+		specifier->num_int.num_i *= -1;
+	}
+}
 
 char	*null_and_null_size(va_list arg, t_specifier *specifier, char *buffer)
 {
@@ -19,11 +28,12 @@ char	*null_and_null_size(va_list arg, t_specifier *specifier, char *buffer)
 	else
 		return (ft_itoa_base(va_arg(arg, unsigned int),
 					specifier->base, buffer, specifier->is_upcase));
-	if (specifier->num_int.num_i < 0)
-	{
-		specifier->sign = -1;
-		specifier->num_int.num_i *= -1;
-	}
+	ft_abs(specifier);
+//	if (specifier->num_int.num_i < 0)
+//	{
+//		specifier->sign = -1;
+//		specifier->num_int.num_i *= -1;
+//	}
 	return (ft_itoa_base(specifier->num_int.num_i,
 				specifier->base, buffer, specifier->is_upcase));
 }
@@ -36,14 +46,14 @@ char	*h_else_hh_size(va_list arg, t_specifier *specifier, char *buffer)
 			specifier->num_int.num_s = va_arg(arg, int);
 		else
 			return (ft_itoa_base((unsigned short)va_arg(arg, unsigned int),
-						specifier->base, buffer, specifier->is_upcase));	
+						specifier->base, buffer, specifier->is_upcase));
 		if (specifier->num_int.num_s < 0)
 		{
 			specifier->sign = -1;
 			specifier->num_int.num_s *= -1;
 		}
 		return (ft_itoa_base(specifier->num_int.num_s,
-					specifier->base, buffer, specifier->is_upcase));	
+					specifier->base, buffer, specifier->is_upcase));
 	}
 	else if (specifier->size[0] == 'h' && specifier->size[1] == 'h')
 	{

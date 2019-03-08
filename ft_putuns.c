@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 11:53:37 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/08 14:57:27 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/08 18:42:21 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,14 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 	j = *i;
 	while ((*i)++ < specifier->width)
 	{
-        if (specifier->null)
-            write(1, "0", 1);
-        else
-		    write(1, " ", 1);
+		specifier->null ? write(1, "0", 1) : write(1, " ", 1);
 		specifier->num_bytes++;
 	}
 	write(1, ptr, j);
 	specifier->num_bytes += j;
 }
 
-void	    ft_putuns(va_list arg, t_specifier *specifier)
+void		ft_putuns(va_list arg, t_specifier *specifier)
 {
 	int		i;
 	char	*ptr;

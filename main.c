@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 13:12:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/08 15:44:20 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/08 19:40:41 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int		ft_printf(const char *format, ...)
 
 int			main(void)
 {
-	printf("%d\n", printf("|%#020.s|", "1234567890abcdef"));
-	printf("%d\n", ft_printf("|%#020.s|", "1234567890abcdef"));
+	printf("%d\n", printf("|%#020d|", -123456789));
+	printf("%d\n", ft_printf("|%#020d|", -123456789));
 	return (0);
 }
