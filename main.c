@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 13:12:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/09 12:15:27 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/09 18:09:43 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int		ft_printf(const char *format, ...)
 
 int			main(void)
 {
-	printf("%d\n", printf("|%#020hhd|", -1234567890123456789));
-	printf("%d\n", ft_printf("|%#020hhd|", -1234567890123456789));
+	printf("%d\n", printf("%.%|"));
+	printf("%d\n", ft_printf("%.%|"));
 	return (0);
 }

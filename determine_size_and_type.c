@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:06:05 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/08 19:08:47 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/09 17:35:38 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ char		*specifier_size(char *format, t_specifier *specifier)
 
 char		*specifier_type(char *format, t_specifier *specifier, va_list arg)
 {
+	if (*format == '\0')
+		return (format);
 	if (*format == 'c')
 		ft_putchar(arg, specifier);
 	if (*format == 's')
