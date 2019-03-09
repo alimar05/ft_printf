@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 11:53:37 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/08 18:42:21 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/09 12:33:17 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		ft_putuns(va_list arg, t_specifier *specifier)
 	specifier->base = 10;
 	specifier->is_uns = 1;
 	if (specifier->size[0] == '\0' && specifier->size[1] == '\0')
-		ptr = null_and_null_size(arg, specifier, buffer);
+		ptr = nul_and_nul_size(arg, specifier, buffer);
 	else if (specifier->size[0] == 'h' && (specifier->size[1] == '\0'
 				|| specifier->size[1] == 'h'))
 		ptr = h_else_hh_size(arg, specifier, buffer);

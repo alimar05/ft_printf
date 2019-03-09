@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 13:12:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/08 19:40:41 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/09 12:15:27 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ static void	specifier_init(t_specifier *specifier)
 	specifier->sign = 1;
 	specifier->is_uns = 0;
 	specifier->is_upcase = 0;
+	specifier->num_int.num_c = 0;
+	specifier->num_int.num_s = 0;
+	specifier->num_int.num_i = 0;
+	specifier->num_int.num_l = 0;
+	specifier->num_int.num_ll = 0;
 }
 
 char		*ft_itoa_base(size_t num, size_t base, char *buffer, char is_upcase)
@@ -78,7 +83,7 @@ int		ft_printf(const char *format, ...)
 
 int			main(void)
 {
-	printf("%d\n", printf("|%#020d|", -123456789));
-	printf("%d\n", ft_printf("|%#020d|", -123456789));
+	printf("%d\n", printf("|%#020hhd|", -1234567890123456789));
+	printf("%d\n", ft_printf("|%#020hhd|", -1234567890123456789));
 	return (0);
 }

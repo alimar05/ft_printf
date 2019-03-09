@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 12:52:42 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/08 14:56:46 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/09 12:32:20 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void		ft_puthex(va_list arg, t_specifier *specifier)
 	ptr = NULL;
 	specifier->base = 16;
 	if (specifier->size[0] == '\0' && specifier->size[1] == '\0')
-		ptr = null_and_null_size(arg, specifier, buffer);
+		ptr = nul_and_nul_size(arg, specifier, buffer);
 	else if (specifier->size[0] == 'h' && (specifier->size[1] == '\0'
 				|| specifier->size[1] == 'h'))
 		ptr = h_else_hh_size(arg, specifier, buffer);

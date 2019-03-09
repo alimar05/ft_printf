@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/08 19:46:36 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/09 12:31:22 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <stdarg.h>
 # include <unistd.h>
 
-typedef union				u_num_int
+typedef struct				s_num_int
 {
 	char					num_c;
 	short					num_s;
@@ -60,7 +60,7 @@ char						*ft_itoa_base(size_t num, size_t base,
 		char *buffer, char is_upcase);
 char						*specifier_parse(char *format,
 		t_specifier *specifier, va_list arg);
-char						*null_and_null_size(va_list arg,
+char						*nul_and_nul_size(va_list arg,
 		t_specifier *specifier, char *buffer);
 char						*h_else_hh_size(va_list arg,
 		t_specifier *specifier, char *buffer);
