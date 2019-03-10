@@ -12,11 +12,21 @@
 
 #include "ft_printf.h"
 
-static char	*specifier_width(char *format, t_specifier *specifier)
+static char	*specifier_width(char *format, t_specifier *specifier, va_list arg)
 {
-	unsigned int	nbr;
+	int             nbr;
 
 	nbr = 0;
+    if (*format == '*')
+    {
+        format++;
+        nbr = va_arg(arg, int);
+    }
+    if (nbr < 0)
+    {
+        nbr *= -1;
+        specifier->minus = 1;
+    }
 	while (*format >= '0' && *format <= '9')
 		nbr = nbr * 10 + (*format++ - '0');
 	specifier->width = nbr;
@@ -55,7 +65,7 @@ char		*specifier_parse(char *format, t_specifier *specifier, va_list arg)
 {
 	while (is_specifier_flags(format, specifier))
 		format++;
-	format = specifier_width(format, specifier);
+	format = specifier_width(format, specifier, arg);
 	if (*format == '.')
 	{
 		specifier->dot = 1;
