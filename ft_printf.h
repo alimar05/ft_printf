@@ -49,6 +49,7 @@ void						ft_putdec(va_list arg, t_specifier *specifier);
 void						ft_putoct(va_list arg, t_specifier *specifier);
 void						ft_putuns(va_list arg, t_specifier *specifier);
 void						ft_puthex(va_list arg, t_specifier *specifier);
+void						ft_putbin(va_list arg, t_specifier *specifier);
 void						ft_putchar(va_list arg, t_specifier *specifier);
 char						*specifier_size(char *format,
 		t_specifier *specifier);

@@ -64,7 +64,13 @@ int		ft_printf(const char *format, ...)
 	specifier.num_bytes = 0;
 	while (*format)
 	{
-		if (*format == '%')
+        if (*format == '%' && *(format + 1) == '%')
+        {
+            write(1, format, 1);
+            specifier.num_bytes++;
+            format += 2;
+        }
+        else if (*format == '%')
 		{
 			format++;
 			specifier_init(&specifier);
@@ -83,7 +89,7 @@ int		ft_printf(const char *format, ...)
 
 int			main(void)
 {
-	printf("%d\n", printf("%.%|"));
-	printf("%d\n", ft_printf("%.%|"));
+	printf("%d\n", printf("|%#x|", 7));
+	printf("%d\n", ft_printf("|%#b|", 7));
 	return (0);
 }

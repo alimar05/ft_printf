@@ -62,5 +62,7 @@ char		*specifier_type(char *format, t_specifier *specifier, va_list arg)
 		ft_puthex(arg, specifier);
 	if (*format == 'X')
 		ft_puthex_upcase(arg, specifier);
+    if (*format == 'b')
+        ft_putbin(arg, specifier);
 	return (format + 1);
 }
