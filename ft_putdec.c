@@ -20,6 +20,12 @@ static void	print_minus(t_specifier *specifier, char *ptr, int *i)
 		specifier->width--;
 		specifier->num_bytes++;
 	}
+    while (--specifier->precision - *i >= 0)
+    {
+        write(1, "0", 1);
+        specifier->width--;
+        specifier->num_bytes++;
+    }
 	write(1, ptr, *i);
 	specifier->num_bytes += *i;
 	while ((*i)++ < specifier->width)
@@ -32,6 +38,7 @@ static void	print_minus(t_specifier *specifier, char *ptr, int *i)
 static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 {
 	int		j;
+    int     temp;
 
 	if (specifier->sign < 0)
 	{
@@ -39,14 +46,31 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 		specifier->num_bytes++;
 	}
 	j = *i;
-	if (specifier->null && specifier->sign < 0)
+	if (specifier->null && !specifier->dot && specifier->sign < 0)
 		write(1, "-", 1);
+    temp = specifier->precision;
+    while (--temp - j >= 0)
+        specifier->width--;
 	while ((*i)++ < specifier->width)
 	{
-		specifier->null ? write(1, "0", 1) : write(1, " ", 1);
+        if (specifier->null && !specifier->dot)
+		    write(1, "0", 1);
+        else
+            write(1, " ", 1);
 		specifier->num_bytes++;
 	}
-	if (!specifier->null && specifier->sign < 0)
+    while (--specifier->precision - j >= 0)
+    {
+        if (specifier->null && specifier->sign < 0)
+        {
+            write(1, "-", 1);
+            specifier->sign = 1;
+        }
+        write(1, "0", 1);
+        specifier->width--;
+        specifier->num_bytes++;
+    }
+	if (specifier->sign < 0)
 		write(1, "-", 1);
 	write(1, ptr, j);
 	specifier->num_bytes += j;

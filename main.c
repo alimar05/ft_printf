@@ -89,7 +89,7 @@ int		ft_printf(const char *format, ...)
 
 int			main(void)
 {
-	printf("%d\n", printf("|%*.5s|", -50, "123456789abcdef"));
-	printf("%d\n", ft_printf("|%*.5s|", -50, "123456789abcdef"));
+	printf("%d\n", printf("|%20.15d|", -123456789));
+	printf("%d\n", ft_printf("|%20.15d|", -123456789));
 	return (0);
 }

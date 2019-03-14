@@ -33,11 +33,16 @@ static char	*specifier_width(char *format, t_specifier *specifier, va_list arg)
 	return (format);
 }
 
-static char	*specifier_precision(char *format, t_specifier *specifier)
+static char	*specifier_precision(char *format, t_specifier *specifier, va_list arg)
 {
 	unsigned int	nbr;
 
 	nbr = 0;
+    if (*format == '*')
+    {
+        format++;
+        nbr = va_arg(arg, unsigned int);
+    }
 	while (*format >= '0' && *format <= '9')
 		nbr = nbr * 10 + (*format++ - '0');
 	specifier->precision = nbr;
@@ -70,7 +75,7 @@ char		*specifier_parse(char *format, t_specifier *specifier, va_list arg)
 	{
 		specifier->dot = 1;
 		format++;
-		format = specifier_precision(format, specifier);
+		format = specifier_precision(format, specifier, arg);
 	}
 	format = specifier_size(format, specifier);
 	format = specifier_type(format, specifier, arg);
