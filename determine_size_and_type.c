@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:06:05 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/09 17:35:38 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/14 17:14:23 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,23 @@ char		*specifier_type(char *format, t_specifier *specifier, va_list arg)
 {
 	if (*format == '\0')
 		return (format);
-	if (*format == 'c')
+	else if (*format == 'c')
 		ft_putchar(arg, specifier);
-	if (*format == 's')
+	else if (*format == 's')
 		ft_putstr(arg, specifier);
-	if (*format == 'p')
+	else if (*format == 'p')
 		ft_putadr(arg, specifier);
-	if (*format == 'd' || *format == 'i')
+	else if (*format == 'd' || *format == 'i')
 		ft_putdec(arg, specifier);
-	if (*format == 'o')
+	else if (*format == 'o')
 		ft_putoct(arg, specifier);
-	if (*format == 'u')
+	else if (*format == 'u')
 		ft_putuns(arg, specifier);
-	if (*format == 'x')
+	else if (*format == 'x')
 		ft_puthex(arg, specifier);
-	if (*format == 'X')
+	else if (*format == 'X')
 		ft_puthex_upcase(arg, specifier);
-    if (*format == 'b')
+	else if (*format == 'b')
         ft_putbin(arg, specifier);
 	return (format + 1);
 }

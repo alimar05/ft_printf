@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/09 17:35:39 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/14 18:21:08 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,10 @@ void						ft_puthex_upcase(va_list arg,
 		t_specifier *specifier);
 char						*specifier_type(char *format,
 		t_specifier *specifier, va_list arg);
-char						*ft_itoa_base(size_t num, size_t base,
-		char *buffer, char is_upcase);
+char						*ft_itoa_base(t_specifier *specifier_parse, long int num, 
+		char *buffer);
+char						*ft_itoa_base_uns(t_specifier *specifier_parse, size_t num, 
+		char *buffer);
 char						*specifier_parse(char *format,
 		t_specifier *specifier, va_list arg);
 char						*nul_and_nul_size(va_list arg,

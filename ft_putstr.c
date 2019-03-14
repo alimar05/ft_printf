@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 14:49:11 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/08 18:33:40 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/14 14:20:33 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,12 @@ void		ft_putstr(va_list arg, t_specifier *specifier)
 	char	*str;
 
 	str = va_arg(arg, char *);
+	if (str == NULL)
+	{
+		write(1, "(null)", 6);
+		specifier->num_bytes += 6;
+		return ;
+	}
 	STRLEN(str, i);
 	if (specifier->dot && !specifier->precision)
 		while (specifier->width--)

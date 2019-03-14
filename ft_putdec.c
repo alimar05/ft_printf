@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:18:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/09 12:32:04 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/14 22:43:43 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,38 @@
 
 static void	print_minus(t_specifier *specifier, char *ptr, int *i)
 {
+	int		j;
+
+	j = *i;
 	if (specifier->sign < 0)
 	{
 		write(1, "-", 1);
 		specifier->width--;
 		specifier->num_bytes++;
 	}
-    while (--specifier->precision - *i >= 0)
-    {
-        write(1, "0", 1);
-        specifier->width--;
-        specifier->num_bytes++;
-    }
+	else if (specifier->plus)
+	{
+		write(1, "+", 1);
+		specifier->width--;
+		specifier->num_bytes++;
+	}
+	else if (specifier->space)
+	{
+		write(1, " ", 1);
+		specifier->width--;
+		specifier->num_bytes++;
+	}
+	if (specifier->dot)
+		while (j++ < specifier->precision)
+		{
+			write(1, "0", 1);
+			specifier->width--;
+			specifier->num_bytes++;
+		}
 	write(1, ptr, *i);
 	specifier->num_bytes += *i;
-	while ((*i)++ < specifier->width)
+	j = *i;
+	while (j++ < specifier->width)
 	{
 		write(1, " ", 1);
 		specifier->num_bytes++;
@@ -38,42 +55,142 @@ static void	print_minus(t_specifier *specifier, char *ptr, int *i)
 static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 {
 	int		j;
-    int     temp;
 
-	if (specifier->sign < 0)
+	j = *i;
+	if (specifier->null && !specifier->dot && specifier->sign > 0)
 	{
+		if (specifier->plus)
+		{
+			write(1, "+", 1);
+			specifier->width--;
+			specifier->num_bytes++;
+		}
+		else if (specifier->space)
+		{
+			write(1, " ", 1);
+			specifier->width--;
+			specifier->num_bytes++;
+		}
+		while (j++ < specifier->width)
+		{
+			write(1, "0", 1);
+			specifier->num_bytes++;
+		}
+		write(1, ptr, *i);
+		specifier->num_bytes += *i;
+	}
+	else if (!specifier->null && !specifier->dot && specifier->sign > 0)
+	{
+		if ((specifier->plus || specifier->space) && j < specifier->width)
+			specifier->width--;
+		while (j++ < specifier->width)
+		{
+			write(1, " ", 1);
+			specifier->num_bytes++;
+		}
+		if (specifier->plus)
+		{
+			write(1, "+", 1);
+			specifier->num_bytes++;
+		}
+		else if (specifier->space)
+		{
+			write(1, " ", 1);
+			specifier->num_bytes++;
+		}
+		write(1, ptr, *i);
+		specifier->num_bytes += *i;
+	}
+	else if (specifier->null && !specifier->dot && specifier->sign < 0)
+	{
+		write(1, "-", 1);
 		specifier->width--;
 		specifier->num_bytes++;
+		while (j++ < specifier->width)
+		{
+			write(1, "0", 1);
+			specifier->num_bytes++;
+		}
+		write(1, ptr, *i);
+		specifier->num_bytes += *i;
 	}
-	j = *i;
-	if (specifier->null && !specifier->dot && specifier->sign < 0)
-		write(1, "-", 1);
-    temp = specifier->precision;
-    while (--temp - j >= 0)
-        specifier->width--;
-	while ((*i)++ < specifier->width)
+	else if (!specifier->null && !specifier->dot && specifier->sign < 0)
 	{
-        if (specifier->null && !specifier->dot)
-		    write(1, "0", 1);
-        else
-            write(1, " ", 1);
-		specifier->num_bytes++;
-	}
-    while (--specifier->precision - j >= 0)
-    {
-        if (specifier->null && specifier->sign < 0)
-        {
-            write(1, "-", 1);
-            specifier->sign = 1;
-        }
-        write(1, "0", 1);
-        specifier->width--;
-        specifier->num_bytes++;
-    }
-	if (specifier->sign < 0)
+		specifier->width--;
+		while (j++ < specifier->width)
+		{
+			write(1, " ", 1);
+			specifier->num_bytes++;
+		}
 		write(1, "-", 1);
-	write(1, ptr, j);
-	specifier->num_bytes += j;
+		specifier->num_bytes++;
+		write(1, ptr, *i);
+		specifier->num_bytes += *i;
+	}
+	else if (specifier->dot && specifier->sign > 0)
+	{
+		if ((specifier->plus || specifier->space) && j < specifier->width)
+			specifier->width--;
+		while (j++ < specifier->precision)
+			specifier->width--;
+		j = *i;
+		while (j++ < specifier->width)
+		{
+			write(1, " ", 1);
+			specifier->num_bytes++;
+		}
+		if (specifier->plus)
+		{
+			write(1, "+", 1);
+			specifier->num_bytes++;
+		}
+		else if (specifier->space)
+		{
+			write(1, " ", 1);
+			specifier->num_bytes++;
+		}
+		j = *i;
+		while (j++ < specifier->precision)
+		{
+			write(1, "0", 1);
+			specifier->num_bytes++;
+		}
+		if (*ptr == '0' && !specifier->precision && specifier->width)
+		{
+			write(1, " ", 1);
+			specifier->num_bytes += *i;
+		}
+		else if (*ptr == '0' && !specifier->precision && !specifier->width)
+			write(1, "", 0);
+		else
+		{
+			write(1, ptr, *i);
+			specifier->num_bytes += *i;
+		}
+	}
+	else if (specifier->dot && specifier->sign < 0)
+	{
+		if (j < specifier->width)
+			specifier->width--;
+		while (j++ < specifier->precision)
+			specifier->width--;
+		j = *i;
+		while (j++ < specifier->width)
+		{
+			write(1, " ", 1);
+			specifier->num_bytes++;
+		}
+		write(1, "-", 1);
+		specifier->num_bytes++;
+		j = *i;
+		while (j++ < specifier->precision)
+		{
+			write(1, "0", 1);
+			specifier->num_bytes++;
+		}
+		write(1, ptr, *i);
+		specifier->num_bytes += *i;
+	}
 }
 
 void		ft_putdec(va_list arg, t_specifier *specifier)

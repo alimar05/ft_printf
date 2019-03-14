@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 12:46:46 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/08 14:55:55 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/14 17:38:15 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ void		ft_putadr(va_list arg, t_specifier *specifier)
 	char	buffer[21];
 
 	ptr = NULL;
+	specifier->base = 16;
 	num = va_arg(arg, size_t);
-	ptr = ft_itoa_base(num, 16, buffer, specifier->is_upcase);
+	ptr = ft_itoa_base(specifier, num, buffer);
 	STRLEN(ptr, i);
 	if (specifier->minus)
 		print_minus(specifier, ptr, &i);

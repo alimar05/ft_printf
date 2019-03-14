@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 12:52:42 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/09 12:32:20 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/14 13:58:42 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	print_minus(t_specifier *specifier, char *ptr, int *i)
 {
-	if (specifier->sharp)
+	if (*ptr != '0' && specifier->sharp)
 	{
 		write(1, "0x", 2);
 		specifier->width -= 2;
@@ -33,12 +33,12 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 {
 	int		j;
 
-	if (specifier->sharp)
+	if (*ptr != '0' && specifier->sharp)
 	{
 		specifier->width -= 2;
 		specifier->num_bytes += 2;
 	}
-	if (specifier->sharp && specifier->null && !specifier->dot)
+	if (*ptr != '0' && specifier->sharp && specifier->null && !specifier->dot)
 		write(1, "0x", 2);
 	j = *i;
 	while (j++ < specifier->width)
@@ -49,7 +49,7 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 			write(1, " ", 1);
 		specifier->num_bytes++;
 	}
-	if (specifier->sharp && (!specifier->null || specifier->dot))
+	if (*ptr != '0' && specifier->sharp && (!specifier->null || specifier->dot))
 		write(1, "0x", 2);
 	write(1, ptr, *i);
 	specifier->num_bytes += *i;

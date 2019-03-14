@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:07:27 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/09 12:30:22 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/14 18:20:25 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,10 @@ char		*nul_and_nul_size(va_list arg, t_specifier *specifier, char *buffer)
 	{
 		specifier->num_int.num_i = va_arg(arg, int);
 		ft_abs(specifier);
-		return (ft_itoa_base(specifier->num_int.num_i,
-					specifier->base, buffer, specifier->is_upcase));
+		return (ft_itoa_base(specifier, specifier->num_int.num_i, buffer));
 	}
 	else
-		return (ft_itoa_base(va_arg(arg, unsigned int),
-					specifier->base, buffer, specifier->is_upcase));
+		return (ft_itoa_base_uns(specifier, va_arg(arg, unsigned int), buffer));
 }
 
 char		*h_else_hh_size(va_list arg, t_specifier *specifier, char *buffer)
@@ -63,24 +61,22 @@ char		*h_else_hh_size(va_list arg, t_specifier *specifier, char *buffer)
 		{
 			specifier->num_int.num_s = va_arg(arg, int);
 			ft_abs(specifier);
-			return (ft_itoa_base(specifier->num_int.num_s,
-						specifier->base, buffer, specifier->is_upcase));
+			return (ft_itoa_base(specifier, specifier->num_int.num_s, buffer));
 		}
 		else
-			return (ft_itoa_base((unsigned short)va_arg(arg, unsigned int),
-						specifier->base, buffer, specifier->is_upcase));
+			return (ft_itoa_base_uns(specifier,
+						(unsigned short)va_arg(arg, unsigned int), buffer));
 	else if (specifier->size[0] == 'h' && specifier->size[1] == 'h')
 	{
 		if (specifier->base == 10 && !specifier->is_uns)
 		{
 			specifier->num_int.num_c = va_arg(arg, int);
 			ft_abs(specifier);
-			return (ft_itoa_base(specifier->num_int.num_c,
-						specifier->base, buffer, specifier->is_upcase));
+			return (ft_itoa_base(specifier, specifier->num_int.num_c, buffer));
 		}
 		else
-			return (ft_itoa_base((unsigned char)va_arg(arg, unsigned int),
-						specifier->base, buffer, specifier->is_upcase));
+			return (ft_itoa_base_uns(specifier,
+						(unsigned char)va_arg(arg, unsigned int), buffer));
 	}
 	return (NULL);
 }
@@ -92,24 +88,22 @@ char		*l_else_ll_size(va_list arg, t_specifier *specifier, char *buffer)
 		{
 			specifier->num_int.num_l = va_arg(arg, long int);
 			ft_abs(specifier);
-			return (ft_itoa_base(specifier->num_int.num_l, specifier->base,
-						buffer, specifier->is_upcase));
+			return (ft_itoa_base(specifier, specifier->num_int.num_l, buffer));
 		}
 		else
-			return (ft_itoa_base(va_arg(arg, unsigned long int),
-						specifier->base, buffer, specifier->is_upcase));
+			return (ft_itoa_base_uns(specifier, va_arg(arg, unsigned long int),
+						buffer));
 	else if (specifier->size[0] == 'l' && specifier->size[1] == 'l')
 	{
 		if (specifier->base == 10 && !specifier->is_uns)
 		{
 			specifier->num_int.num_ll = va_arg(arg, long long int);
 			ft_abs(specifier);
-			return (ft_itoa_base(specifier->num_int.num_ll,
-						specifier->base, buffer, specifier->is_upcase));
+			return (ft_itoa_base(specifier, specifier->num_int.num_ll, buffer));
 		}
 		else
-			return (ft_itoa_base(va_arg(arg, unsigned long long int),
-						specifier->base, buffer, specifier->is_upcase));
+			return (ft_itoa_base_uns(specifier,
+						va_arg(arg, unsigned long long int), buffer));
 	}
 	return (NULL);
 }
