@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 12:52:42 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/14 13:58:42 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/15 11:59:44 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,60 @@
 
 static void	print_minus(t_specifier *specifier, char *ptr, int *i)
 {
-	if (*ptr != '0' && specifier->sharp)
+	int		j;
+
+	j = *i;
+	if (!specifier->dot)
 	{
-		write(1, "0x", 2);
-		specifier->width -= 2;
-		specifier->num_bytes += 2;
+		if (specifier->sharp && *ptr != '0')
+			specifier->width -= 2;
+		if (specifier->sharp && *ptr != '0')
+		{
+			write(1, "0x", 2);
+			specifier->num_bytes += 2;
+		}
+		write(1, ptr, *i);
+		specifier->num_bytes += *i;
+		while (j++ < specifier->width)
+		{
+			write(1, " ", 1);
+			specifier->num_bytes++;
+		}
 	}
-	write(1, ptr, *i);
-	specifier->num_bytes += *i;
-	while ((*i)++ < specifier->width)
+	else
 	{
-		write(1, " ", 1);
-		specifier->num_bytes++;
+		if (specifier->sharp && *ptr != '0')
+			specifier->width -= 2;
+		if (specifier->sharp && *ptr != '0')
+		{
+			write(1, "0x", 2);
+			specifier->num_bytes += 2;
+		}
+		while (j++ < specifier->precision)
+		{
+			write(1, "0", 1);
+			specifier->num_bytes++;
+		}
+		if (*ptr == '0' && !specifier->precision && specifier->width)
+		{
+			write(1, " ", 1);
+			specifier->num_bytes += *i;
+		}
+		else if (*ptr == '0' && !specifier->precision && !specifier->width)
+			write(1, "", 0);
+		else
+		{
+			write(1, ptr, *i);
+			specifier->num_bytes += *i;
+		}
+		j = *i;
+		if (j < specifier->precision)
+			specifier->width -= specifier->precision - j;
+		while (j++ < specifier->width)
+		{
+			write(1, " ", 1);
+			specifier->num_bytes++;
+		}
 	}
 }
 
@@ -33,26 +75,76 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 {
 	int		j;
 
-	if (*ptr != '0' && specifier->sharp)
-	{
-		specifier->width -= 2;
-		specifier->num_bytes += 2;
-	}
-	if (*ptr != '0' && specifier->sharp && specifier->null && !specifier->dot)
-		write(1, "0x", 2);
 	j = *i;
-	while (j++ < specifier->width)
+	if (!specifier->null && !specifier->dot)
 	{
-		if (specifier->null && !specifier->dot)
-			write(1, "0", 1);
-		else
+		if (specifier->sharp && *ptr != '0')
+			specifier->width -= 2;
+		while (j++ < specifier->width)
+		{
 			write(1, " ", 1);
-		specifier->num_bytes++;
+			specifier->num_bytes++;
+		}
+		if (specifier->sharp && *ptr != '0')
+		{
+			write(1, "0x", 2);
+			specifier->num_bytes += 2;
+		}
+		write(1, ptr, *i);
+		specifier->num_bytes += *i;
 	}
-	if (*ptr != '0' && specifier->sharp && (!specifier->null || specifier->dot))
-		write(1, "0x", 2);
-	write(1, ptr, *i);
-	specifier->num_bytes += *i;
+	else if (specifier->null && !specifier->dot)
+	{
+		if (specifier->sharp && *ptr != 0)
+			specifier->width -= 2;
+		if (specifier->sharp && *ptr != '0')
+		{
+			write(1, "0x", 2);
+			specifier->num_bytes += 2;
+		}
+		while (j++ < specifier->width)
+		{
+			write(1, "0", 1);
+			specifier->num_bytes++;
+		}
+		write(1, ptr, *i);
+		specifier->num_bytes += *i;
+	}
+	else if (specifier->dot)
+	{
+		if (specifier->sharp && *ptr != '0')
+			specifier->width -= 2;
+		if (j < specifier->precision)
+			specifier->width -= specifier->precision - j;
+		while (j++ < specifier->width)
+		{
+			write(1, " ", 1);
+			specifier->num_bytes++;
+		}
+		if (specifier->sharp && *ptr != '0')
+		{
+			write(1, "0x", 2);
+			specifier->num_bytes += 2;
+		}
+		j = *i;
+		while (j++ < specifier->precision)
+		{
+			write(1, "0", 1);
+			specifier->num_bytes++;
+		}
+		if (*ptr == '0' && !specifier->precision && specifier->width)
+		{
+			write(1, " ", 1);
+			specifier->num_bytes += *i;
+		}
+		else if (*ptr == '0' && !specifier->precision && !specifier->width)
+			write(1, "", 0);
+		else
+		{
+			write(1, ptr, *i);
+			specifier->num_bytes += *i;
+		}
+	}
 }
 
 void		ft_puthex(va_list arg, t_specifier *specifier)

@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:18:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/14 22:43:43 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/15 11:58:06 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,8 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 	{
 		if ((specifier->plus || specifier->space) && j < specifier->width)
 			specifier->width--;
-		while (j++ < specifier->precision)
-			specifier->width--;
+		if (j < specifier->precision)
+			specifier->width -= specifier->precision - j;
 		j = *i;
 		while (j++ < specifier->width)
 		{
@@ -172,8 +172,8 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 	{
 		if (j < specifier->width)
 			specifier->width--;
-		while (j++ < specifier->precision)
-			specifier->width--;
+		if (j < specifier->precision)
+			specifier->width -= specifier->precision - j;
 		j = *i;
 		while (j++ < specifier->width)
 		{
