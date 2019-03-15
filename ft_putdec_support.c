@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:21:47 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/15 20:49:30 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/15 20:57:02 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	dec_minus_sign_plus_space_dot(t_specifier *specifier, int *i)
 {
-	int		j;
-
-	j = *i;
 	if (specifier->sign < 0)
 	{
 		write(1, "-", 1);
@@ -36,12 +33,11 @@ void	dec_minus_sign_plus_space_dot(t_specifier *specifier, int *i)
 		specifier->num_bytes++;
 	}
 	if (specifier->dot)
-		while (j++ < specifier->precision)
-		{
-			write(1, "0", 1);
-			specifier->width--;
-			specifier->num_bytes++;
-		}
+	{
+		if (*i < specifier->precision)
+			specifier->width -= specifier->precision - *i;
+		padding(specifier, specifier->precision, '0', i);
+	}
 }
 
 void	dec_no_minus_null(t_specifier *specifier, char *ptr, int *i)
