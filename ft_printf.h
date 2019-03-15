@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/14 18:21:08 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/15 14:06:16 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct				s_specifier
 	char					sign:2;
 	unsigned int			is_uns:1;
 	unsigned int			is_upcase:1;
+	char					*view;
+	char					view_size;
 	int						num_bytes;
 }							t_specifier;
 
@@ -51,6 +53,15 @@ void						ft_putuns(va_list arg, t_specifier *specifier);
 void						ft_puthex(va_list arg, t_specifier *specifier);
 void						ft_putbin(va_list arg, t_specifier *specifier);
 void						ft_putchar(va_list arg, t_specifier *specifier);
+void						dec_no_minus(t_specifier *specifier, char *ptr, int *i);
+void						dec_no_minus_dot(t_specifier *specifier, char *ptr, int *i);
+void						dec_no_minus_null(t_specifier *specifier, char *ptr, int *i);
+void						dec_no_minus_sign(t_specifier *specifier, char *ptr, int *i);
+void						dec_no_minus_dot_sign(t_specifier *specifier, char *ptr, int *i);
+void						dec_no_minus_null_sign(t_specifier *specifier, char *ptr, int *i);
+void						dec_minus_sign_plus_space_dot(t_specifier *specifier, int *i);
+void						print_no_dec_minus(t_specifier *specifier, char *ptr, int *i);
+void						print_no_dec_no_minus(t_specifier *specifier, char *ptr, int *i);
 char						*specifier_size(char *format,
 		t_specifier *specifier);
 void						ft_puthex_upcase(va_list arg,

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_nodec_support.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/08 12:52:42 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/15 11:59:44 by rymuller         ###   ########.fr       */
+/*   Created: 2019/03/15 13:29:07 by rymuller          #+#    #+#             */
+/*   Updated: 2019/03/15 15:28:21 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	print_minus(t_specifier *specifier, char *ptr, int *i)
+void		print_no_dec_minus(t_specifier *specifier, char *ptr, int *i)
 {
 	int		j;
 
@@ -20,11 +20,11 @@ static void	print_minus(t_specifier *specifier, char *ptr, int *i)
 	if (!specifier->dot)
 	{
 		if (specifier->sharp && *ptr != '0')
-			specifier->width -= 2;
+			specifier->width -= specifier->view_size;
 		if (specifier->sharp && *ptr != '0')
 		{
-			write(1, "0x", 2);
-			specifier->num_bytes += 2;
+			write(1, specifier->view, specifier->view_size);
+			specifier->num_bytes += specifier->view_size;
 		}
 		write(1, ptr, *i);
 		specifier->num_bytes += *i;
@@ -36,19 +36,26 @@ static void	print_minus(t_specifier *specifier, char *ptr, int *i)
 	}
 	else
 	{
+		if (*ptr == '0' && specifier->base == 8 && specifier->sharp && !specifier->precision)
+			specifier->width--;
 		if (specifier->sharp && *ptr != '0')
-			specifier->width -= 2;
+			specifier->width -= specifier->view_size;
 		if (specifier->sharp && *ptr != '0')
 		{
-			write(1, "0x", 2);
-			specifier->num_bytes += 2;
+			write(1, specifier->view, specifier->view_size);
+			specifier->num_bytes += specifier->view_size;
 		}
 		while (j++ < specifier->precision)
 		{
 			write(1, "0", 1);
 			specifier->num_bytes++;
 		}
-		if (*ptr == '0' && !specifier->precision && specifier->width)
+		if (*ptr == '0' && specifier->base == 8 && specifier->sharp && !specifier->precision)
+		{
+			write(1, "0", 1);
+			specifier->num_bytes++;
+		}
+		else if (*ptr == '0' && !specifier->precision && specifier->width)
 		{
 			write(1, " ", 1);
 			specifier->num_bytes += *i;
@@ -71,7 +78,7 @@ static void	print_minus(t_specifier *specifier, char *ptr, int *i)
 	}
 }
 
-static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
+void		print_no_dec_no_minus(t_specifier *specifier, char *ptr, int *i)
 {
 	int		j;
 
@@ -79,7 +86,7 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 	if (!specifier->null && !specifier->dot)
 	{
 		if (specifier->sharp && *ptr != '0')
-			specifier->width -= 2;
+			specifier->width -= specifier->view_size;
 		while (j++ < specifier->width)
 		{
 			write(1, " ", 1);
@@ -87,8 +94,8 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 		}
 		if (specifier->sharp && *ptr != '0')
 		{
-			write(1, "0x", 2);
-			specifier->num_bytes += 2;
+			write(1, specifier->view, specifier->view_size);
+			specifier->num_bytes += specifier->view_size;
 		}
 		write(1, ptr, *i);
 		specifier->num_bytes += *i;
@@ -96,11 +103,11 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 	else if (specifier->null && !specifier->dot)
 	{
 		if (specifier->sharp && *ptr != 0)
-			specifier->width -= 2;
+			specifier->width -= specifier->view_size;
 		if (specifier->sharp && *ptr != '0')
 		{
-			write(1, "0x", 2);
-			specifier->num_bytes += 2;
+			write(1, specifier->view, specifier->view_size);
+			specifier->num_bytes += specifier->view_size;
 		}
 		while (j++ < specifier->width)
 		{
@@ -112,8 +119,10 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 	}
 	else if (specifier->dot)
 	{
+		if (*ptr == '0' && specifier->base == 8 && specifier->sharp && !specifier->precision)
+			specifier->width--;
 		if (specifier->sharp && *ptr != '0')
-			specifier->width -= 2;
+			specifier->width -= specifier->view_size;
 		if (j < specifier->precision)
 			specifier->width -= specifier->precision - j;
 		while (j++ < specifier->width)
@@ -123,8 +132,8 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 		}
 		if (specifier->sharp && *ptr != '0')
 		{
-			write(1, "0x", 2);
-			specifier->num_bytes += 2;
+			write(1, specifier->view, specifier->view_size);
+			specifier->num_bytes += specifier->view_size;
 		}
 		j = *i;
 		while (j++ < specifier->precision)
@@ -132,7 +141,12 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 			write(1, "0", 1);
 			specifier->num_bytes++;
 		}
-		if (*ptr == '0' && !specifier->precision && specifier->width)
+		if (*ptr == '0' && specifier->base == 8 && specifier->sharp && !specifier->precision)
+		{
+			write(1, "0", 1);
+			specifier->num_bytes++;
+		}
+		else if (*ptr == '0' && !specifier->precision && specifier->width)
 		{
 			write(1, " ", 1);
 			specifier->num_bytes += *i;
@@ -145,27 +159,4 @@ static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 			specifier->num_bytes += *i;
 		}
 	}
-}
-
-void		ft_puthex(va_list arg, t_specifier *specifier)
-{
-	int		i;
-	char	*ptr;
-	char	buffer[21];
-
-	ptr = NULL;
-	specifier->base = 16;
-	if (specifier->size[0] == '\0' && specifier->size[1] == '\0')
-		ptr = nul_and_nul_size(arg, specifier, buffer);
-	else if (specifier->size[0] == 'h' && (specifier->size[1] == '\0'
-				|| specifier->size[1] == 'h'))
-		ptr = h_else_hh_size(arg, specifier, buffer);
-	else if (specifier->size[0] == 'l' && (specifier->size[1] == '\0'
-				|| specifier->size[1] == 'l'))
-		ptr = l_else_ll_size(arg, specifier, buffer);
-	STRLEN(ptr, i);
-	if (specifier->minus)
-		print_minus(specifier, ptr, &i);
-	else
-		print_no_minus(specifier, ptr, &i);
 }

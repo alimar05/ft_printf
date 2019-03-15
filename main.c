@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 13:12:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/15 11:59:48 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/15 15:28:20 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ int		ft_printf(const char *format, ...)
 /*
 int			main(void)
 {
-	printf("%d\n", printf("|%0#-10.3x|", 1));
-	printf("%d\n", ft_printf("|%0#-10.3x|", 1));
+	printf("%d\n", printf("|%#.o|", 0));
+	printf("%d\n", ft_printf("|%#.o|", 0));
 
 //	printf("%d\n", printf("|%+10.5d|", 18446744073709551615));
 //	printf("%d\n", ft_printf("|%+10.5d|", 18446744073709551615));
