@@ -6,41 +6,11 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 11:53:37 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/09 12:33:17 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/15 19:40:54 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static void	print_minus(t_specifier *specifier, char *ptr, int *i)
-{
-	write(1, ptr, *i);
-	specifier->num_bytes += *i;
-	while ((*i)++ < specifier->width)
-	{
-		write(1, " ", 1);
-		specifier->num_bytes++;
-	}
-}
-
-static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
-{
-	int		j;
-
-	if (specifier->sign < 0)
-	{
-		specifier->width--;
-		specifier->num_bytes++;
-	}
-	j = *i;
-	while ((*i)++ < specifier->width)
-	{
-		specifier->null ? write(1, "0", 1) : write(1, " ", 1);
-		specifier->num_bytes++;
-	}
-	write(1, ptr, j);
-	specifier->num_bytes += j;
-}
 
 void		ft_putuns(va_list arg, t_specifier *specifier)
 {
@@ -50,7 +20,9 @@ void		ft_putuns(va_list arg, t_specifier *specifier)
 
 	ptr = NULL;
 	specifier->base = 10;
+	specifier->view = "";
 	specifier->is_uns = 1;
+	specifier->view_size = 0;
 	if (specifier->size[0] == '\0' && specifier->size[1] == '\0')
 		ptr = nul_and_nul_size(arg, specifier, buffer);
 	else if (specifier->size[0] == 'h' && (specifier->size[1] == '\0'
@@ -61,7 +33,7 @@ void		ft_putuns(va_list arg, t_specifier *specifier)
 		ptr = l_else_ll_size(arg, specifier, buffer);
 	STRLEN(ptr, i);
 	if (specifier->minus)
-		print_minus(specifier, ptr, &i);
+		print_no_dec_minus(specifier, ptr, &i);
 	else
-		print_no_minus(specifier, ptr, &i);
+		print_no_dec_no_minus(specifier, ptr, &i);
 }

@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:18:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/15 13:39:21 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/15 20:30:42 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,13 @@ static void	print_minus(t_specifier *specifier, char *ptr, int *i)
 
 	j = *i;
 	dec_minus_sign_plus_space_dot(specifier, i);
-	write(1, ptr, j);
-	specifier->num_bytes += j;
-	while (j++ < specifier->width)
-	{
-		write(1, " ", 1);
-		specifier->num_bytes++;
-	}
+	write(1, ptr, *i);
+	specifier->num_bytes += *i;
+	padding(specifier, specifier->width, ' ', i);
 }
 
 static void	print_no_minus(t_specifier *specifier, char *ptr, int *i)
 {
-	int		j;
-
-	j = *i;
 	if (specifier->null && !specifier->dot && specifier->sign > 0)
 		dec_no_minus_null(specifier, ptr, i);
 	else if (!specifier->null && !specifier->dot && specifier->sign > 0)

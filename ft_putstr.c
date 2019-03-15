@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 14:49:11 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/14 14:20:33 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/15 20:03:04 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,13 @@ static void	print_minus(t_specifier *specifier, char *str, int *i)
 		*i = specifier->precision < *i ? specifier->precision : *i;
 		write(1, str, *i);
 		specifier->num_bytes += *i;
-		while ((*i)++ < specifier->width)
-		{
-			write(1, " ", 1);
-			specifier->num_bytes++;
-		}
+		padding(specifier, specifier->width, ' ', i);
 	}
 	else
 	{
 		write(1, str, *i);
 		specifier->num_bytes += *i;
-		while ((*i)++ < specifier->width)
-		{
-			write(1, " ", 1);
-			specifier->num_bytes++;
-		}
+		padding(specifier, specifier->width, ' ', i);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/15 18:54:35 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/15 19:14:58 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,28 @@ void						ft_putuns(va_list arg, t_specifier *specifier);
 void						ft_puthex(va_list arg, t_specifier *specifier);
 void						ft_putbin(va_list arg, t_specifier *specifier);
 void						ft_putchar(va_list arg, t_specifier *specifier);
-void						dec_no_minus(t_specifier *specifier, char *ptr, int *i);
-void						dec_no_minus_dot(t_specifier *specifier, char *ptr, int *i);
-void						dec_no_minus_null(t_specifier *specifier, char *ptr, int *i);
-void						dec_no_minus_sign(t_specifier *specifier, char *ptr, int *i);
-void						dec_no_minus_dot_sign(t_specifier *specifier, char *ptr, int *i);
-void						dec_no_minus_null_sign(t_specifier *specifier, char *ptr, int *i);
-void						dec_minus_sign_plus_space_dot(t_specifier *specifier, int *i);
-void						print_no_dec_minus(t_specifier *specifier, char *ptr, int *i);
-void						print_no_dec_no_minus(t_specifier *specifier, char *ptr, int *i);
-void						null_value(t_specifier *specifier, char *ptr, int *i);
-void						padding(t_specifier *specifier, int boundary, char c, int *i);
+void						dec_no_minus(t_specifier *specifier,
+		char *ptr, int *i);
+void						dec_no_minus_dot(t_specifier *specifier,
+		char *ptr, int *i);
+void						dec_no_minus_null(t_specifier *specifier,
+		char *ptr, int *i);
+void						dec_no_minus_sign(t_specifier *specifier,
+		char *ptr, int *i);
+void						dec_no_minus_dot_sign(t_specifier *specifier,
+		char *ptr, int *i);
+void						dec_no_minus_null_sign(t_specifier *specifier,
+		char *ptr, int *i);
+void						dec_minus_sign_plus_space_dot(t_specifier \
+		*specifier, int *i);
+void						print_no_dec_minus(t_specifier *specifier,
+		char *ptr, int *i);
+void						print_no_dec_no_minus(t_specifier *specifier,
+		char *ptr, int *i);
+void						null_value(t_specifier *specifier,
+		char *ptr, int *i);
+void						padding(t_specifier *specifier,
+		int boundary, char c, int *i);
 void						view(t_specifier *specifier, char *ptr);
 char						*specifier_size(char *format,
 		t_specifier *specifier);
@@ -71,10 +82,10 @@ void						ft_puthex_upcase(va_list arg,
 		t_specifier *specifier);
 char						*specifier_type(char *format,
 		t_specifier *specifier, va_list arg);
-char						*ft_itoa_base(t_specifier *specifier_parse, long int num, 
-		char *buffer);
-char						*ft_itoa_base_uns(t_specifier *specifier_parse, size_t num, 
-		char *buffer);
+char						*ft_itoa_base(t_specifier *specifier_parse,
+		long int num, char *buffer);
+char						*ft_itoa_base_uns(t_specifier *specifier_parse,
+		size_t num, char *buffer);
 char						*specifier_parse(char *format,
 		t_specifier *specifier, va_list arg);
 char						*nul_and_nul_size(va_list arg,
