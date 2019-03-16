@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/15 19:14:58 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/16 14:25:55 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define FT_PRINTF_H
 # include <stdarg.h>
 # include <unistd.h>
+# define N "\x1b[0m"
+# define R "\x1b[31m"
+# define G "\x1b[32m"
+# define Y "\x1b[33m"
+# define B "\x1b[34m"
+# define M "\x1b[35m"
+# define C "\x1b[36m"
+# define W "\x1b[37m"
 
 typedef struct				s_num_int
 {

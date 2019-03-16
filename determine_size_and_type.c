@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:06:05 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/15 19:19:12 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/16 13:53:10 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,33 @@ char		*specifier_size(char *format, t_specifier *specifier)
 	return (format);
 }
 
+static char	*without_specifier(char *format, t_specifier *specifier)
+{
+	int		j;
+
+	j = 0;
+	if (*format == '%' && specifier->minus)
+	{
+		write(1, "%", 1);
+		specifier->num_bytes++;
+	}
+	if (specifier->width)
+	{
+		if (specifier->null && !specifier->minus)
+			padding(specifier, specifier->width - 1, '0', &j);
+		else
+			padding(specifier, specifier->width - 1, ' ', &j);
+	}
+	if (*format == '%' && !specifier->minus)
+	{
+		write(1, "%", 1);
+		specifier->num_bytes++;
+	}
+	else
+		return (format - 1);
+	return (format);
+}
+
 char		*specifier_type(char *format, t_specifier *specifier, va_list arg)
 {
 	if (*format == '\0')
@@ -64,5 +91,7 @@ char		*specifier_type(char *format, t_specifier *specifier, va_list arg)
 		ft_puthex_upcase(arg, specifier);
 	else if (*format == 'b')
 		ft_putbin(arg, specifier);
+	else
+		format = without_specifier(format, specifier);
 	return (format + 1);
 }

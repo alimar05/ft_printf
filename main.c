@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 13:12:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/15 20:49:28 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/16 14:25:54 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,7 @@ int		ft_printf(const char *format, ...)
 	specifier.num_bytes = 0;
 	while (*format)
 	{
-		if (*format == '%' && *(format + 1) == '%')
-		{
-			write(1, format, 1);
-			specifier.num_bytes++;
-			format += 2;
-		}
-		else if (*format == '%')
+		if (*format == '%')
 		{
 			format++;
 			specifier_init(&specifier);
@@ -110,11 +104,10 @@ int		ft_printf(const char *format, ...)
 	va_end(arg);
 	return (specifier.num_bytes);
 }
-/*
 int			main(void)
 {
-	printf("%d\n", printf("|%-10.20d|", 4));
-	printf("%d\n", ft_printf("|%-10.20d|", 4));
+	printf("%d\n", printf(G"|%lu|"G W"|%050d|"W, 4294967296, 12345678));
+	printf("%d\n", ft_printf(G"|%lu|"G C"|%050d|"C, 4294967296, 12345678));
 
 //	printf("%d\n", printf("|%+10.5d|", 18446744073709551615));
 //	printf("%d\n", ft_printf("|%+10.5d|", 18446744073709551615));
@@ -124,4 +117,3 @@ int			main(void)
 //	printf("%d\n", ft_printf("|%ld|", 9223372036854775808));
 	return (0);
 }
-*/
