@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:17:16 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/15 19:40:52 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/16 15:34:49 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,15 +124,13 @@ void		ft_putadr(va_list arg, t_specifier *specifier)
 	specifier->sharp = 1;
 	specifier->view = "0x";
 	specifier->view_size = 2;
-	if (specifier->size[0] == '\0' && specifier->size[1] == '\0')
-		ptr = nul_and_nul_size(arg, specifier, buffer);
-	else if (specifier->size[0] == 'h' && (specifier->size[1] == '\0'
-				|| specifier->size[1] == 'h'))
-		ptr = h_else_hh_size(arg, specifier, buffer);
-	else if (specifier->size[0] == 'l' && (specifier->size[1] == '\0'
-				|| specifier->size[1] == 'l'))
-		ptr = l_else_ll_size(arg, specifier, buffer);
+	ptr = ft_itoa_base_uns(specifier, va_arg(arg, size_t), buffer);
 	STRLEN(ptr, i);
+	if (*ptr == '0')
+	{
+		write(1, specifier->view, specifier->view_size);
+		specifier->num_bytes += specifier->view_size;
+	}
 	if (specifier->minus)
 		print_no_dec_minus(specifier, ptr, &i);
 	else
