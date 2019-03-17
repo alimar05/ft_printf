@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 13:29:07 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/16 15:34:48 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/17 16:34:18 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static void	minus_dot(t_specifier *specifier, char *ptr, int *i)
 	if (*ptr == '0' && specifier->base == 8 && specifier->sharp
 			&& !specifier->precision)
 		specifier->width--;
+	if (*ptr == '0' && specifier->type == 'p' && !specifier->precision)
+		specifier->width++;
 	if (specifier->sharp && *ptr != '0')
 		specifier->width -= specifier->view_size;
 	view(specifier, ptr);
@@ -38,6 +40,8 @@ static void	no_minus_dot(t_specifier *specifier, char *ptr, int *i)
 	if (*ptr == '0' && specifier->base == 8 && specifier->sharp
 			&& !specifier->precision)
 		specifier->width--;
+	if (*ptr == '0' && specifier->type == 'p' && !specifier->precision)
+		specifier->width++;
 	if (specifier->sharp && *ptr != '0')
 		specifier->width -= specifier->view_size;
 	if (j < specifier->precision)

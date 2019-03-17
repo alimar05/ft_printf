@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 13:12:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/16 15:30:00 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/17 16:34:11 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ int			main(void)
 {
 	int		test_simple_mix;
 
-	printf("%d\n", printf("|%-05p|", 0));
-	printf("%d\n", ft_printf("|%-05p|", 0));
+	printf("%d\n", printf("|%30|", 0));
+	printf("%d\n", ft_printf("|%30|", 0));
 
 //	printf("%d\n", printf("|%+10.5d|", 18446744073709551615));
 //	printf("%d\n", ft_printf("|%+10.5d|", 18446744073709551615));

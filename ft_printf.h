@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/16 14:25:55 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/17 13:58:09 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,14 @@ typedef struct				s_specifier
 	unsigned int			dot:1;
 	int						precision;
 	char					size[3];
+	char					type;
 	t_num_int				num_int;
 	unsigned int			base:5;
 	char					sign:2;
 	unsigned int			is_uns:1;
 	unsigned int			is_upcase:1;
 	char					*view;
-	char					view_size;
+	unsigned int			view_size:2;
 	int						num_bytes;
 }							t_specifier;
 
@@ -61,6 +62,8 @@ void						ft_putuns(va_list arg, t_specifier *specifier);
 void						ft_puthex(va_list arg, t_specifier *specifier);
 void						ft_putbin(va_list arg, t_specifier *specifier);
 void						ft_putchar(va_list arg, t_specifier *specifier);
+char						*determine_size_num(va_list arg,
+		t_specifier *specifier, char *buffer);
 void						dec_no_minus(t_specifier *specifier,
 		char *ptr, int *i);
 void						dec_no_minus_dot(t_specifier *specifier,

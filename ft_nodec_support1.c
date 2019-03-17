@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 18:52:19 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/15 19:05:22 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/17 16:34:17 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,18 @@ void	null_value(t_specifier *specifier, char *ptr, int *i)
 		write(1, "0", 1);
 		specifier->num_bytes++;
 	}
-	else if (*ptr == '0' && !specifier->precision && specifier->width)
+	else if (*ptr == '0' && !specifier->precision && specifier->width
+			&& specifier->type != 'p')
 	{
 		write(1, " ", 1);
 		specifier->num_bytes += *i;
+	}
+	else if (*ptr  == '0' && specifier->type == 'p' && !specifier->precision)
+		write(1, "", 0);
+	else if (*ptr == '0' && specifier->type == 'p' && specifier->precision)
+	{
+		write(1, "0", 1);
+		specifier->num_bytes++;
 	}
 	else if (*ptr == '0' && !specifier->precision && !specifier->width)
 		write(1, "", 0);
@@ -53,4 +61,6 @@ void	view(t_specifier *specifier, char *ptr)
 		write(1, specifier->view, specifier->view_size);
 		specifier->num_bytes += specifier->view_size;
 	}
+	else if (*ptr == '0' && specifier->type == 'p')
+		write(1, specifier->view, specifier->view_size);
 }
