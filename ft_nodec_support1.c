@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 18:52:19 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/17 16:34:17 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/17 18:05:55 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	null_value(t_specifier *specifier, char *ptr, int *i)
 			&& specifier->type != 'p')
 	{
 		write(1, " ", 1);
-		specifier->num_bytes += *i;
+		specifier->num_bytes++;
 	}
 	else if (*ptr  == '0' && specifier->type == 'p' && !specifier->precision)
 		write(1, "", 0);

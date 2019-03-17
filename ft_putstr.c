@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 14:49:11 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/15 20:03:04 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/17 18:05:30 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void		ft_putchar(va_list arg, t_specifier *specifier)
 	{
 		while (specifier->width > 1)
 		{
-			write(1, " ", 1);
+			specifier->null ? write(1, "0", 1) : write(1, " ", 1);
 			specifier->width--;
 			specifier->num_bytes++;
 		}
