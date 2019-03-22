@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:06:05 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/17 12:59:27 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/21 11:23:35 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ char		*specifier_type(char *format, t_specifier *specifier, va_list arg)
 		ft_puthex_upcase(arg, specifier);
 	else if (*format == 'b')
 		ft_putbin(arg, specifier);
+	else if (*format == 'f')
+		ft_putflt(arg, specifier);
 	else
 		format = without_specifier(format, specifier);
 	return (format + 1);

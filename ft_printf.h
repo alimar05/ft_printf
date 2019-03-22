@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/17 13:58:09 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/22 14:35:44 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,32 @@
 # define M "\x1b[35m"
 # define C "\x1b[36m"
 # define W "\x1b[37m"
+
+struct						s_parts_d
+{
+	unsigned long int		mantissa:52;
+	unsigned long int		exponenta:11;
+	unsigned long int		sign:1;
+};
+
+typedef union				u_num_flt_d
+{
+	double					num;
+	struct s_parts_d		parts;
+}							t_num_flt_d;
+
+struct						s_parts_ld
+{
+	unsigned long int		mantissa:63;
+	unsigned long int		exponenta:16;
+	unsigned long int		sign:1;
+};
+
+typedef union				u_num_flt_ld
+{
+	long double				num;
+	struct s_parts_ld		parts;
+}							t_num_flt_ld;
 
 typedef struct				s_num_int
 {
@@ -45,6 +71,8 @@ typedef struct				s_specifier
 	char					size[3];
 	char					type;
 	t_num_int				num_int;
+	t_num_flt_d				num_flt_d;
+	t_num_flt_ld			num_flt_ld;
 	unsigned int			base:5;
 	char					sign:2;
 	unsigned int			is_uns:1;
@@ -61,6 +89,7 @@ void						ft_putoct(va_list arg, t_specifier *specifier);
 void						ft_putuns(va_list arg, t_specifier *specifier);
 void						ft_puthex(va_list arg, t_specifier *specifier);
 void						ft_putbin(va_list arg, t_specifier *specifier);
+void						ft_putflt(va_list arg, t_specifier *specifier);
 void						ft_putchar(va_list arg, t_specifier *specifier);
 char						*determine_size_num(va_list arg,
 		t_specifier *specifier, char *buffer);
