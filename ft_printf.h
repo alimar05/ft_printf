@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/22 14:35:44 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/22 14:39:13 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define C "\x1b[36m"
 # define W "\x1b[37m"
 
+#include <stdio.h>
 struct						s_parts_d
 {
 	unsigned long int		mantissa:52;
