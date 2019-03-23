@@ -6,11 +6,12 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 13:12:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/22 17:13:58 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/23 16:53:11 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <float.h>
 
 static void	specifier_init(t_specifier *specifier)
 {
@@ -106,8 +107,11 @@ int		ft_printf(const char *format, ...)
 
 int			main(void)
 {
-	printf("%d\n", printf("|%f|", 10.5));
-	printf("%d\n", ft_printf("|%f|", 10.5));
+//	printf("%d\n", printf("|%f|", 11));
+//	printf("%d\n", ft_printf("|%f|", 11));
+
+	printf("%d\n", printf("|%f|", 11.0000035));
+	printf("%d\n", ft_printf("|%f|", 11.0000035));
 
 //	printf("%d\n", printf("|%+10.5d|", 18446744073709551615));
 //	printf("%d\n", ft_printf("|%+10.5d|", 18446744073709551615));

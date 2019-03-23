@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/22 14:39:13 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/23 16:53:15 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ typedef union				u_num_flt_d
 
 struct						s_parts_ld
 {
-	unsigned long int		mantissa:63;
-	unsigned long int		exponenta:16;
+	unsigned long int		mantissa:64;
+	unsigned long int		exponenta:15;
 	unsigned long int		sign:1;
 };
 
