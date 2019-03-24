@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 11:24:59 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/23 16:53:03 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/24 15:23:32 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void		ft_putflt(va_list arg, t_specifier *specifier)
 	char		*ptr2;
 	size_t		ipart;
 	double		dpart;
+	double		round;
 	int			null_count;
 	char		buffer1[21];
 	char		buffer2[21];
@@ -64,8 +65,11 @@ void		ft_putflt(va_list arg, t_specifier *specifier)
 		specifier->precision = 6;
 	if (specifier->precision)
 	   dpart *= ft_pow(10, specifier->precision);
-	printf("%f\n", dpart);
-	ptr2 = ft_itoa_base_uns(specifier, dpart + 1e-2, buffer2);
+	round = dpart - ft_pow(10, specifier->precision);
+	if (((char)round % 2 && round - (char)round == 0.5) || round - (char)round > 0.5)
+		ptr2 = ft_itoa_base_uns(specifier, dpart + 1, buffer2);
+	else
+		ptr2 = ft_itoa_base_uns(specifier, dpart, buffer2);
 	STRLEN(ptr1, i);
 	STRLEN(ptr2, j);
 	if (specifier->sign < 0)
