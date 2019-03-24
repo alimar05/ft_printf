@@ -6,13 +6,13 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 11:24:59 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/24 15:23:32 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/24 17:31:50 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static size_t	ft_pow(size_t num, size_t n)
+size_t		ft_pow(size_t num, size_t n)
 {
 	size_t	res;
 
@@ -29,21 +29,61 @@ static size_t	ft_pow(size_t num, size_t n)
 	return (res);
 }
 
-void		ft_putflt(va_list arg, t_specifier *specifier)
+char		*after_rounding(t_specifier *specifier, double dpart)
+{
+	char		*ptr;
+	double		round;
+	char		buffer[21];
+
+	round = dpart - ft_pow(10, specifier->precision);
+	if (((size_t)round % 2 && round - (size_t)round == 0.5)
+			|| round - (size_t)round > 0.5)
+		ptr = ft_itoa_base_uns(specifier, dpart + 1, buffer);
+	else
+		ptr = ft_itoa_base_uns(specifier, dpart, buffer);
+	return (ptr);
+}
+
+void		print_float(t_specifier *specifier, size_t ipart, double dpart, int null_count)
 {
 	int			i;
 	int			j;
-	char		*ptr1;
-	char		*ptr2;
+	char		*ptr;
+//	double		round;
+	char		buffer[21];
+
+	if (specifier->sign < 0)
+	{
+		write(1, "-", 1);
+		specifier->num_bytes++;
+	}
+	ptr = ft_itoa_base_uns(specifier, ipart, buffer);
+	STRLEN(ptr, i);
+	write(1, ptr, i);
+	if (!specifier->dot)
+		specifier->precision = 6;
+	if (specifier->precision)
+	   dpart *= ft_pow(10, specifier->precision);
+//	round = dpart - ft_pow(10, specifier->precision);
+//	if (((size_t)round % 2 && round - (size_t)round == 0.5) || round - (size_t)round > 0.5)
+//		ptr = ft_itoa_base_uns(specifier, dpart + 1, buffer);
+//	else
+//		ptr = ft_itoa_base_uns(specifier, dpart, buffer);
+	ptr = after_rounding(specifier, dpart);
+	STRLEN(ptr, j);
+	while (null_count--)
+		write(1, "0", 1);
+	specifier->precision ? write(1, ".", 1) : specifier->num_bytes--;
+	write(1, ptr + 1, j);
+	specifier->num_bytes += i + j;
+}
+
+void		ft_putflt(va_list arg, t_specifier *specifier)
+{
 	size_t		ipart;
 	double		dpart;
-	double		round;
 	int			null_count;
-	char		buffer1[21];
-	char		buffer2[21];
 
-	ptr1 = NULL;
-	ptr2 = NULL;
 	specifier->base = 10;
 	specifier->num_flt_d.num = va_arg(arg, double);
 	if (specifier->num_flt_d.parts.sign)
@@ -60,27 +100,5 @@ void		ft_putflt(va_list arg, t_specifier *specifier)
 	specifier->num_bytes += null_count;
 	ipart = (size_t)(specifier->num_flt_d.num + 1e-2);
 	dpart = specifier->num_flt_d.num - (double)ipart + 1;
-	ptr1 = ft_itoa_base_uns(specifier, ipart, buffer1);
-	if (!specifier->dot)
-		specifier->precision = 6;
-	if (specifier->precision)
-	   dpart *= ft_pow(10, specifier->precision);
-	round = dpart - ft_pow(10, specifier->precision);
-	if (((char)round % 2 && round - (char)round == 0.5) || round - (char)round > 0.5)
-		ptr2 = ft_itoa_base_uns(specifier, dpart + 1, buffer2);
-	else
-		ptr2 = ft_itoa_base_uns(specifier, dpart, buffer2);
-	STRLEN(ptr1, i);
-	STRLEN(ptr2, j);
-	if (specifier->sign < 0)
-	{
-		write(1, "-", 1);
-		specifier->num_bytes++;
-	}
-	write(1, ptr1, i);
-	while (null_count--)
-		write(1, "0", 1);
-	write(1, ".", 1);
-	write(1, ptr2 + 1, j);
-	specifier->num_bytes += i + j;
+	print_float(specifier, ipart, dpart, null_count);
 }

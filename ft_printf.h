@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/23 17:00:51 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/24 15:46:15 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct				s_specifier
 	int						num_bytes;
 }							t_specifier;
 
+size_t						ft_pow(size_t num, size_t n);
 void						ft_putadr(va_list arg, t_specifier *specifier);
 void						ft_putstr(va_list arg, t_specifier *specifier);
 void						ft_putdec(va_list arg, t_specifier *specifier);
