@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/24 15:46:15 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/28 10:48:12 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ typedef struct				s_specifier
 	char					*view;
 	unsigned int			view_size:2;
 	int						num_bytes;
+	int						i;
+	int						j;
 }							t_specifier;
 
 size_t						ft_pow(size_t num, size_t n);
