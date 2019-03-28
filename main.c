@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 13:12:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/28 15:05:35 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/28 20:36:35 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char		*ft_itoa_base(t_specifier *specifier, long int num, char *buffer)
 	return (ptr);
 }
 
-char		*ft_itoa_base_uns(t_specifier *specifier, size_t num, char *buffer)
+char		*ft_itoa_base_uns(t_specifier *specifier, __int128 num, char *buffer)
 {
 	char		*ptr;
 
@@ -107,11 +107,12 @@ int		ft_printf(const char *format, ...)
 
 int			main(void)
 {
-	double	d;
+	double 	d;
 
-	d = 12.12234789;
-	printf("%d\n", printf("|%20.15f|", d));
-	printf("%d\n", ft_printf("|%20.15f|", d));
+//	d = 0.0 / 0.0;
+	d = -0.555001;
+	printf("%d\n", printf("|%.5f|", d));
+	printf("%d\n", ft_printf("|%.5f|", d));
 
 //	printf("%d\n", printf("|%#0500f|", -DBL_MAX));
 //	printf("%d\n", ft_printf("|%#0500f|", -DBL_MAX));

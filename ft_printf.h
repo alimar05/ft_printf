@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/28 10:48:12 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/28 19:49:14 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct				s_specifier
 	int						j;
 }							t_specifier;
 
-size_t						ft_pow(size_t num, size_t n);
+__int128					ft_pow(size_t num, size_t n);
 void						ft_putadr(va_list arg, t_specifier *specifier);
 void						ft_putstr(va_list arg, t_specifier *specifier);
 void						ft_putdec(va_list arg, t_specifier *specifier);
@@ -95,6 +95,10 @@ void						ft_puthex(va_list arg, t_specifier *specifier);
 void						ft_putbin(va_list arg, t_specifier *specifier);
 void						ft_putflt(va_list arg, t_specifier *specifier);
 void						ft_putchar(va_list arg, t_specifier *specifier);
+char						*rounding_ipart(t_specifier *specifier,
+		size_t ipart, double dpart, char *buffer);
+char						*rounding_dpart(t_specifier *specifier,
+		double dpart, char *buffer);
 char						*determine_size_num(va_list arg,
 		t_specifier *specifier, char *buffer);
 void						dec_no_minus(t_specifier *specifier,
@@ -129,7 +133,7 @@ char						*specifier_type(char *format,
 char						*ft_itoa_base(t_specifier *specifier_parse,
 		long int num, char *buffer);
 char						*ft_itoa_base_uns(t_specifier *specifier_parse,
-		size_t num, char *buffer);
+		__int128 num, char *buffer);
 char						*specifier_parse(char *format,
 		t_specifier *specifier, va_list arg);
 char						*nul_and_nul_size(va_list arg,
