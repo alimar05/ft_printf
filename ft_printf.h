@@ -85,7 +85,7 @@ typedef struct				s_specifier
 	int						j;
 }							t_specifier;
 
-__int128					ft_pow(size_t num, size_t n);
+size_t						ft_pow(size_t num, size_t n);
 void						ft_putadr(va_list arg, t_specifier *specifier);
 void						ft_putstr(va_list arg, t_specifier *specifier);
 void						ft_putdec(va_list arg, t_specifier *specifier);
@@ -133,7 +133,7 @@ char						*specifier_type(char *format,
 char						*ft_itoa_base(t_specifier *specifier_parse,
 		long int num, char *buffer);
 char						*ft_itoa_base_uns(t_specifier *specifier_parse,
-		__int128 num, char *buffer);
+		size_t num, char *buffer);
 char						*specifier_parse(char *format,
 		t_specifier *specifier, va_list arg);
 char						*nul_and_nul_size(va_list arg,

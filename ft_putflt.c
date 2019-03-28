@@ -16,21 +16,19 @@ static void	print_minus(t_specifier *specifier, size_t ipart, double dpart,
 		int null_count)
 {
 	int			len;
-	__int128	idpart;
 	char		buffer[21];
 
-	idpart = 0;
 	if (!specifier->dot)
 		specifier->precision = 6;
 	if (specifier->precision)
-		idpart = dpart * ft_pow(10, specifier->precision);
+		dpart *= ft_pow(10, specifier->precision);
 	if (specifier->sign < 0)
 	{
 		write(1, "-", 1);
 		specifier->width--;
 		specifier->num_bytes++;
 	}
-	write(1, rounding_ipart(specifier, ipart, idpart, buffer), specifier->i);
+	write(1, rounding_ipart(specifier, ipart, dpart, buffer), specifier->i);
 	while (null_count--)
 		write(1, "0", 1);
 	if (specifier->precision || (specifier->dot && specifier->sharp))
@@ -39,7 +37,7 @@ static void	print_minus(t_specifier *specifier, size_t ipart, double dpart,
 		specifier->width--;
 		specifier->num_bytes++;
 	}
-	write(1, rounding_dpart(specifier, idpart, buffer), specifier->j);
+	write(1, rounding_dpart(specifier, dpart, buffer), specifier->j);
 	len = specifier->i + specifier->j;
 	padding(specifier, specifier->width, ' ', &len);
 }
@@ -73,19 +71,17 @@ static void	null_or_space_padding(t_specifier *specifier)
 static void	print_no_minus(t_specifier *specifier, size_t ipart, double dpart,
 		int null_count)
 {
-	__int128	idpart;
 	char		*ptr1;
 	char		*ptr2;
 	char		buffer1[21];
 	char		buffer2[21];
 
-	idpart = 0;
 	if (!specifier->dot)
 		specifier->precision = 6;
 	if (specifier->precision)
-		idpart = dpart * ft_pow(10, specifier->precision);
-	ptr1 = rounding_ipart(specifier, ipart, idpart, buffer1);
-	ptr2 = rounding_dpart(specifier, idpart, buffer2);
+		dpart *= ft_pow(10, specifier->precision);
+	ptr1 = rounding_ipart(specifier, ipart, dpart, buffer1);
+	ptr2 = rounding_dpart(specifier, dpart, buffer2);
 	if (specifier->precision || (specifier->dot && specifier->sharp))
 		specifier->width--;
 	if (specifier->sign < 0)

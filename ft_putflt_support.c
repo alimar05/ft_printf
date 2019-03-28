@@ -12,9 +12,9 @@
 
 #include "ft_printf.h"
 
-__int128	ft_pow(size_t num, size_t n)
+size_t		ft_pow(size_t num, size_t n)
 {
-	__int128	res;
+	size_t		res;
 
 	if (num == 1)
 		return (1);

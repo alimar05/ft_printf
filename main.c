@@ -60,7 +60,7 @@ char		*ft_itoa_base(t_specifier *specifier, long int num, char *buffer)
 	return (ptr);
 }
 
-char		*ft_itoa_base_uns(t_specifier *specifier, __int128 num, char *buffer)
+char		*ft_itoa_base_uns(t_specifier *specifier, size_t num, char *buffer)
 {
 	char		*ptr;
 
@@ -109,13 +109,13 @@ int			main(void)
 {
 	double 	d;
 
-//	d = 0.0 / 0.0;
-	d = -0.555001;
-	printf("%d\n", printf("|%.5f|", d));
-	printf("%d\n", ft_printf("|%.5f|", d));
+	d = 0.0 / 0.0;
+	d = -0.500001;
+	printf("%d\n", printf("|%.19f|", d));
+	printf("%d\n", ft_printf("|%.19f|", d));
 
-//	printf("%d\n", printf("|%#0500f|", -DBL_MAX));
-//	printf("%d\n", ft_printf("|%#0500f|", -DBL_MAX));
+//	printf("%d\n", printf("|%#0500.19f|", -DBL_MAX));
+//	printf("%d\n", ft_printf("|%#0500.19f|", -DBL_MAX));
 
 //	printf("%d\n", printf("|%+10.5d|", 18446744073709551615));
 //	printf("%d\n", ft_printf("|%+10.5d|", 18446744073709551615));
