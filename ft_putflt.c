@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 11:24:59 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/28 13:24:48 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/28 14:37:25 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ size_t		ft_pow(size_t num, size_t n)
 	return (res);
 }
 
-char		*rounding_ipart(t_specifier *specifier, size_t ipart, double dpart)
+char		*rounding_ipart(t_specifier *specifier, size_t ipart, double dpart,
+		char *buffer)
 {
 	char		*ptr;
 	double		round;
-	char		buffer[21];
 
 	round = dpart - ft_pow(10, specifier->precision);
 	if (specifier->dot && !specifier->precision && (((ipart % 2)
@@ -46,11 +46,11 @@ char		*rounding_ipart(t_specifier *specifier, size_t ipart, double dpart)
 	return (ptr);
 }
 
-char		*rounding_dpart(t_specifier *specifier, double dpart)
+char		*rounding_dpart(t_specifier *specifier, double dpart,
+		char *buffer)
 {
 	char		*ptr;
 	double		round;
-	char		buffer[21];
 
 	round = dpart - ft_pow(10, specifier->precision);
 	if (((size_t)round % 2 && round - (size_t)round == 0.5)
@@ -68,6 +68,7 @@ static void	print_minus(t_specifier *specifier, size_t ipart, double dpart,
 		int null_count)
 {
 	int			len;
+	char		buffer[21];
 
 	if (!specifier->dot)
 		specifier->precision = 6;
@@ -79,7 +80,7 @@ static void	print_minus(t_specifier *specifier, size_t ipart, double dpart,
 		specifier->width--;
 		specifier->num_bytes++;
 	}
-	write(1, rounding_ipart(specifier, ipart, dpart), specifier->i);
+	write(1, rounding_ipart(specifier, ipart, dpart, buffer), specifier->i);
 	while (null_count--)
 		write(1, "0", 1);
 	if (specifier->precision || (specifier->dot && specifier->sharp))
@@ -88,7 +89,7 @@ static void	print_minus(t_specifier *specifier, size_t ipart, double dpart,
 		specifier->width--;
 		specifier->num_bytes++;
 	}
-	write(1, rounding_dpart(specifier, dpart), specifier->j);
+	write(1, rounding_dpart(specifier, dpart, buffer), specifier->j);
 	len = specifier->i + specifier->j;
 	padding(specifier, specifier->width, ' ', &len);
 }
@@ -99,13 +100,15 @@ static void	print_no_minus(t_specifier *specifier, size_t ipart, double dpart,
 	int			len;
 	char		*ptr1;
 	char		*ptr2;
+	char		buffer1[21];
+	char		buffer2[21];
 
 	if (!specifier->dot)
 		specifier->precision = 6;
 	if (specifier->precision)
 		dpart *= ft_pow(10, specifier->precision);
-	ptr1 = rounding_ipart(specifier, ipart, dpart);
-	ptr2 = rounding_dpart(specifier, dpart);
+	ptr1 = rounding_ipart(specifier, ipart, dpart, buffer1);
+	ptr2 = rounding_dpart(specifier, dpart, buffer2);
 	len = specifier->i + specifier->j;
 	if (specifier->null)
 	{
