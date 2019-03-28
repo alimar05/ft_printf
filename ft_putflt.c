@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 11:24:59 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/28 14:37:25 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/28 15:05:48 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,15 @@ static void	print_no_minus(t_specifier *specifier, size_t ipart, double dpart,
 	ptr1 = rounding_ipart(specifier, ipart, dpart, buffer1);
 	ptr2 = rounding_dpart(specifier, dpart, buffer2);
 	len = specifier->i + specifier->j;
+	if (specifier->precision || (specifier->dot && specifier->sharp))
+		specifier->width--;
+	if (specifier->sign < 0)
+		specifier->width--;
 	if (specifier->null)
 	{
 		if (specifier->sign < 0)
 		{
 			write(1, "-", 1);
-			specifier->width--;
 			specifier->num_bytes++;
 		}
 		padding(specifier, specifier->width, '0', &len);
@@ -136,7 +139,6 @@ static void	print_no_minus(t_specifier *specifier, size_t ipart, double dpart,
 	if (specifier->precision || (specifier->dot && specifier->sharp))
 	{
 		write(1, ".", 1);
-		specifier->width--;
 		specifier->num_bytes++;
 	}
 	write(1, ptr2, specifier->j);
