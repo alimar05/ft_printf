@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/28 19:49:14 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/29 13:27:39 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define M "\x1b[35m"
 # define C "\x1b[36m"
 # define W "\x1b[37m"
+# define MAX_DOUBLE_EXP 2047
+# define MAX_DOUBLE 1e+17
 
 #include <stdio.h>
 struct						s_parts_d
@@ -83,6 +85,7 @@ typedef struct				s_specifier
 	int						num_bytes;
 	int						i;
 	int						j;
+	int						null_count;
 }							t_specifier;
 
 size_t						ft_pow(size_t num, size_t n);
@@ -95,6 +98,10 @@ void						ft_puthex(va_list arg, t_specifier *specifier);
 void						ft_putbin(va_list arg, t_specifier *specifier);
 void						ft_putflt(va_list arg, t_specifier *specifier);
 void						ft_putchar(va_list arg, t_specifier *specifier);
+void						flt_sign_null_count_plus_or_space(t_specifier \
+		*specifier, size_t max);
+char						is_special_cases(t_specifier *specifier,
+		unsigned int exponenta);
 char						*rounding_ipart(t_specifier *specifier,
 		size_t ipart, double dpart, char *buffer);
 char						*rounding_dpart(t_specifier *specifier,

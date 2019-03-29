@@ -6,14 +6,13 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 11:24:59 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/28 20:34:38 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/29 13:28:43 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	print_minus(t_specifier *specifier, size_t ipart, double dpart,
-		int null_count)
+static void	print_minus(t_specifier *specifier, size_t ipart, double dpart)
 {
 	int			len;
 	char		buffer[21];
@@ -29,7 +28,7 @@ static void	print_minus(t_specifier *specifier, size_t ipart, double dpart,
 		specifier->num_bytes++;
 	}
 	write(1, rounding_ipart(specifier, ipart, dpart, buffer), specifier->i);
-	while (null_count--)
+	while (specifier->null_count--)
 		write(1, "0", 1);
 	if (specifier->precision || (specifier->dot && specifier->sharp))
 	{
@@ -68,8 +67,7 @@ static void	null_or_space_padding(t_specifier *specifier)
 	}
 }
 
-static void	print_no_minus(t_specifier *specifier, size_t ipart, double dpart,
-		int null_count)
+static void	print_no_minus(t_specifier *specifier, size_t ipart, double dpart)
 {
 	char		*ptr1;
 	char		*ptr2;
@@ -88,7 +86,7 @@ static void	print_no_minus(t_specifier *specifier, size_t ipart, double dpart,
 		specifier->width--;
 	null_or_space_padding(specifier);
 	write(1, ptr1, specifier->i);
-	while (null_count--)
+	while (specifier->null_count--)
 		write(1, "0", 1);
 	if (specifier->precision || (specifier->dot && specifier->sharp))
 	{
@@ -102,42 +100,17 @@ void		ft_putflt(va_list arg, t_specifier *specifier)
 {
 	size_t		ipart;
 	double		dpart;
-	int			null_count;
 
 	specifier->base = 10;
+	specifier->null_count = 0;
 	specifier->num_flt_d.num = va_arg(arg, double);
-	if (specifier->num_flt_d.parts.sign)
-	{
-		specifier->sign = -1;
-		specifier->num_flt_d.parts.sign = 0;
-	}
-	null_count = 0;
-	while (specifier->num_flt_d.num > 1e+17)
-	{
-		null_count++;
-		specifier->num_flt_d.num /= 10;
-	}
-	specifier->width -= null_count;
-	specifier->num_bytes += null_count;
+	if (is_special_cases(specifier, MAX_DOUBLE_EXP))
+		return ;
+	flt_sign_null_count_plus_or_space(specifier, MAX_DOUBLE);
 	ipart = (size_t)(specifier->num_flt_d.num + 1e-2);
 	dpart = specifier->num_flt_d.num - (double)ipart + 1;
-	if (specifier->sign > 0)
-	{
-		if (specifier->plus)
-		{
-			write(1, "+", 1);
-			specifier->width--;
-			specifier->num_bytes++;
-		}
-		else if (specifier->space)
-		{
-			write(1, " ", 1);
-			specifier->width--;
-			specifier->num_bytes++;
-		}
-	}
 	if (specifier->minus)
-		print_minus(specifier, ipart, dpart, null_count);
+		print_minus(specifier, ipart, dpart);
 	else
-		print_no_minus(specifier, ipart, dpart, null_count);
+		print_no_minus(specifier, ipart, dpart);
 }

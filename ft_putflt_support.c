@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 17:20:12 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/28 20:34:37 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/29 13:28:13 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,62 @@ char		*rounding_dpart(t_specifier *specifier, double dpart,
 	STRLEN(ptr, specifier->j);
 	specifier->num_bytes += specifier->j;
 	return (ptr);
+}
+
+char		is_special_cases(t_specifier *specifier, unsigned int exponenta)
+{
+	if (specifier->num_flt_d.parts.exponenta == exponenta
+			&& !specifier->num_flt_d.parts.mantissa
+			&& !specifier->num_flt_d.parts.sign)
+	{
+		write(1, "inf", 3);
+		specifier->num_bytes += 3;
+		return (1);
+	}
+	else if (specifier->num_flt_d.parts.exponenta == exponenta
+			&& !specifier->num_flt_d.parts.mantissa
+			&& specifier->num_flt_d.parts.sign)
+	{
+		write(1, "-inf", 4);
+		specifier->num_bytes += 4;
+		return (1);
+	}
+	else if (specifier->num_flt_d.parts.exponenta == exponenta)
+	{
+		write(1, "nan", 3);
+		specifier->num_bytes += 3;
+		return (1);
+	}
+	return (0);
+}
+
+void		flt_sign_null_count_plus_or_space(t_specifier *specifier, size_t max)
+{
+	if (specifier->num_flt_d.parts.sign)
+	{
+		specifier->sign = -1;
+		specifier->num_flt_d.parts.sign = 0;
+	}
+	while (specifier->num_flt_d.num > max)
+	{
+		specifier->null_count++;
+		specifier->num_flt_d.num /= 10;
+	}
+	specifier->width -= specifier->null_count;
+	specifier->num_bytes += specifier->null_count;
+	if (specifier->sign > 0)
+	{
+		if (specifier->plus)
+		{
+			write(1, "+", 1);
+			specifier->width--;
+			specifier->num_bytes++;
+		}
+		else if (specifier->space)
+		{
+			write(1, " ", 1);
+			specifier->width--;
+			specifier->num_bytes++;
+		}
+	}
 }

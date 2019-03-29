@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 13:12:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/28 20:36:35 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/29 13:30:27 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,13 @@ int			main(void)
 {
 	double 	d;
 
-	d = 0.0 / 0.0;
-	d = -0.500001;
-	printf("%d\n", printf("|%.19f|", d));
-	printf("%d\n", ft_printf("|%.19f|", d));
+//	d = 0.0 / 0;
+	d = -0.50001000000005006;
+	printf("%d\n", printf("|%.15f|", d));
+	printf("%d\n", ft_printf("|%.15f|", d));
 
-//	printf("%d\n", printf("|%#0500.19f|", -DBL_MAX));
-//	printf("%d\n", ft_printf("|%#0500.19f|", -DBL_MAX));
+//	printf("%d\n", printf("|%+0500.19f|", DBL_MAX));
+//	printf("%d\n", ft_printf("|%+0500.19f|", DBL_MAX));
 
 //	printf("%d\n", printf("|%+10.5d|", 18446744073709551615));
 //	printf("%d\n", ft_printf("|%+10.5d|", 18446744073709551615));
