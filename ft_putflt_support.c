@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 17:20:12 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/29 13:28:13 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/29 20:02:32 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ size_t		ft_pow(size_t num, size_t n)
 	return (res);
 }
 
-char		*rounding_ipart(t_specifier *specifier, size_t ipart, double dpart,
+char		*rounding_ipart(t_specifier *specifier, size_t ipart, long double dpart,
 		char *buffer)
 {
 	char		*ptr;
-	double		round;
+	long double	round;
 
 	round = dpart - ft_pow(10, specifier->precision);
 	if (specifier->dot && !specifier->precision && (((ipart % 2)
@@ -46,11 +46,11 @@ char		*rounding_ipart(t_specifier *specifier, size_t ipart, double dpart,
 	return (ptr);
 }
 
-char		*rounding_dpart(t_specifier *specifier, double dpart,
+char		*rounding_dpart(t_specifier *specifier, long double dpart,
 		char *buffer)
 {
 	char		*ptr;
-	double		round;
+	long double	round;
 
 	round = dpart - ft_pow(10, specifier->precision);
 	if (((size_t)round % 2 && round - (size_t)round == 0.5)
@@ -64,25 +64,22 @@ char		*rounding_dpart(t_specifier *specifier, double dpart,
 	return (ptr);
 }
 
-char		is_special_cases(t_specifier *specifier, unsigned int exponenta)
+char		is_special_cases(t_specifier *specifier, unsigned int mnt,
+		unsigned int exp, unsigned int exponenta)
 {
-	if (specifier->num_flt_d.parts.exponenta == exponenta
-			&& !specifier->num_flt_d.parts.mantissa
-			&& !specifier->num_flt_d.parts.sign)
+	if (exp == exponenta && !mnt && !specifier->num_flt_d.parts.sign)
 	{
 		write(1, "inf", 3);
 		specifier->num_bytes += 3;
 		return (1);
 	}
-	else if (specifier->num_flt_d.parts.exponenta == exponenta
-			&& !specifier->num_flt_d.parts.mantissa
-			&& specifier->num_flt_d.parts.sign)
+	else if (exp == exponenta && !mnt && specifier->num_flt_d.parts.sign)
 	{
 		write(1, "-inf", 4);
 		specifier->num_bytes += 4;
 		return (1);
 	}
-	else if (specifier->num_flt_d.parts.exponenta == exponenta)
+	else if (exp == exponenta)
 	{
 		write(1, "nan", 3);
 		specifier->num_bytes += 3;
@@ -91,20 +88,8 @@ char		is_special_cases(t_specifier *specifier, unsigned int exponenta)
 	return (0);
 }
 
-void		flt_sign_null_count_plus_or_space(t_specifier *specifier, size_t max)
+void		flt_plus_or_space(t_specifier *specifier)
 {
-	if (specifier->num_flt_d.parts.sign)
-	{
-		specifier->sign = -1;
-		specifier->num_flt_d.parts.sign = 0;
-	}
-	while (specifier->num_flt_d.num > max)
-	{
-		specifier->null_count++;
-		specifier->num_flt_d.num /= 10;
-	}
-	specifier->width -= specifier->null_count;
-	specifier->num_bytes += specifier->null_count;
 	if (specifier->sign > 0)
 	{
 		if (specifier->plus)

@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 13:12:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/29 13:30:27 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/29 20:04:53 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,15 +107,18 @@ int		ft_printf(const char *format, ...)
 
 int			main(void)
 {
-	double 	d;
+//	double 	d;
+	long double 	d;
 
-//	d = 0.0 / 0;
-	d = -0.50001000000005006;
-	printf("%d\n", printf("|%.15f|", d));
-	printf("%d\n", ft_printf("|%.15f|", d));
+//	d = -1.0 / 0;
+//	d = 0.5000100000000505635L;
+//	d = 0.5000035000000550025;
+	d = 0.0L / 0;
+	printf("%d\n", printf("|%Lf|", d));
+	printf("%d\n", ft_printf("|%Lf|", d));
 
-//	printf("%d\n", printf("|%+0500.19f|", DBL_MAX));
-//	printf("%d\n", ft_printf("|%+0500.19f|", DBL_MAX));
+//	printf("%d\n", printf("|%+0500.19Lf|", LDBL_MAX));
+//	printf("%d\n", ft_printf("|%+0500.19Lf|", LDBL_MAX));
 
 //	printf("%d\n", printf("|%+10.5d|", 18446744073709551615));
 //	printf("%d\n", ft_printf("|%+10.5d|", 18446744073709551615));

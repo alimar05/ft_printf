@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 11:24:59 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/29 13:28:43 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/29 20:04:16 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	null_or_space_padding(t_specifier *specifier)
 	}
 }
 
-static void	print_no_minus(t_specifier *specifier, size_t ipart, double dpart)
+static void	print_no_minus(t_specifier *specifier, size_t ipart, long double dpart)
 {
 	char		*ptr1;
 	char		*ptr2;
@@ -99,16 +99,51 @@ static void	print_no_minus(t_specifier *specifier, size_t ipart, double dpart)
 void		ft_putflt(va_list arg, t_specifier *specifier)
 {
 	size_t		ipart;
-	double		dpart;
+	long double	dpart;
 
 	specifier->base = 10;
 	specifier->null_count = 0;
-	specifier->num_flt_d.num = va_arg(arg, double);
-	if (is_special_cases(specifier, MAX_DOUBLE_EXP))
-		return ;
-	flt_sign_null_count_plus_or_space(specifier, MAX_DOUBLE);
-	ipart = (size_t)(specifier->num_flt_d.num + 1e-2);
-	dpart = specifier->num_flt_d.num - (double)ipart + 1;
+	if (specifier->size[0] == 'L' && specifier->size[1] == '\0')
+	{
+		specifier->num_flt_ld.num = va_arg(arg, long double);
+		if (is_special_cases(specifier, specifier->num_flt_ld.parts.mantissa,
+					specifier->num_flt_ld.parts.exponenta, MAX_LONG_DOUBLE_EXP))
+			return ;
+		if (specifier->num_flt_ld.parts.sign)
+		{
+			specifier->sign = -1;
+			specifier->num_flt_ld.parts.sign = 0;
+		}
+		while (specifier->num_flt_ld.num > MAX_LONG_DOUBLE)
+		{
+			specifier->null_count++;
+			specifier->num_flt_ld.num /= 10;
+		}
+		ipart = (size_t)(specifier->num_flt_ld.num + 1e-2);
+		dpart = specifier->num_flt_ld.num - (long double)ipart + 1;
+	}
+	else
+	{
+		specifier->num_flt_d.num = va_arg(arg, double);
+		if (is_special_cases(specifier, specifier->num_flt_d.parts.mantissa,
+					specifier->num_flt_d.parts.exponenta, MAX_DOUBLE_EXP))
+			return ;
+		if (specifier->num_flt_d.parts.sign)
+		{
+			specifier->sign = -1;
+			specifier->num_flt_d.parts.sign = 0;
+		}
+		while (specifier->num_flt_d.num > MAX_DOUBLE)
+		{
+			specifier->null_count++;
+			specifier->num_flt_d.num /= 10;
+		}
+		ipart = (size_t)(specifier->num_flt_d.num + 1e-2);
+		dpart = specifier->num_flt_d.num - (long double)ipart + 1;
+	}
+	flt_plus_or_space(specifier);
+	specifier->width -= specifier->null_count;
+	specifier->num_bytes += specifier->null_count;
 	if (specifier->minus)
 		print_minus(specifier, ipart, dpart);
 	else

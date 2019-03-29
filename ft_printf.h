@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/29 13:27:39 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/29 19:59:29 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define W "\x1b[37m"
 # define MAX_DOUBLE_EXP 2047
 # define MAX_DOUBLE 1e+17
+# define MAX_LONG_DOUBLE_EXP 32767
+# define MAX_LONG_DOUBLE 1e+20
 
 #include <stdio.h>
 struct						s_parts_d
@@ -89,6 +91,7 @@ typedef struct				s_specifier
 }							t_specifier;
 
 size_t						ft_pow(size_t num, size_t n);
+void						flt_plus_or_space(t_specifier *specifier);
 void						ft_putadr(va_list arg, t_specifier *specifier);
 void						ft_putstr(va_list arg, t_specifier *specifier);
 void						ft_putdec(va_list arg, t_specifier *specifier);
@@ -98,14 +101,12 @@ void						ft_puthex(va_list arg, t_specifier *specifier);
 void						ft_putbin(va_list arg, t_specifier *specifier);
 void						ft_putflt(va_list arg, t_specifier *specifier);
 void						ft_putchar(va_list arg, t_specifier *specifier);
-void						flt_sign_null_count_plus_or_space(t_specifier \
-		*specifier, size_t max);
 char						is_special_cases(t_specifier *specifier,
-		unsigned int exponenta);
+		unsigned int mnt, unsigned int exp, unsigned int exponenta);
 char						*rounding_ipart(t_specifier *specifier,
-		size_t ipart, double dpart, char *buffer);
+		size_t ipart, long double dpart, char *buffer);
 char						*rounding_dpart(t_specifier *specifier,
-		double dpart, char *buffer);
+		long double dpart, char *buffer);
 char						*determine_size_num(va_list arg,
 		t_specifier *specifier, char *buffer);
 void						dec_no_minus(t_specifier *specifier,
