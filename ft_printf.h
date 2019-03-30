@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/29 19:59:29 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/30 18:45:43 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,17 @@
 # define M "\x1b[35m"
 # define C "\x1b[36m"
 # define W "\x1b[37m"
-# define MAX_DOUBLE_EXP 2047
+# define DOUBLE_EXP 2047
+# define DOUBLE_MNT_INF 0
+# define DOUBLE_MNT_NAN 2251799813685248
 # define MAX_DOUBLE 1e+17
-# define MAX_LONG_DOUBLE_EXP 32767
+# define LONG_DOUBLE_EXP 32767
+# define LONG_DOUBLE_MNT_INF 9223372036854775808U
+# define LONG_DOUBLE_MNT_NAN 13835058055282163712U
 # define MAX_LONG_DOUBLE 1e+20
 
 #include <stdio.h>
+
 struct						s_parts_d
 {
 	unsigned long int		mantissa:52;
@@ -91,7 +96,6 @@ typedef struct				s_specifier
 }							t_specifier;
 
 size_t						ft_pow(size_t num, size_t n);
-void						flt_plus_or_space(t_specifier *specifier);
 void						ft_putadr(va_list arg, t_specifier *specifier);
 void						ft_putstr(va_list arg, t_specifier *specifier);
 void						ft_putdec(va_list arg, t_specifier *specifier);
@@ -100,9 +104,11 @@ void						ft_putuns(va_list arg, t_specifier *specifier);
 void						ft_puthex(va_list arg, t_specifier *specifier);
 void						ft_putbin(va_list arg, t_specifier *specifier);
 void						ft_putflt(va_list arg, t_specifier *specifier);
+void						ft_putflt_long(va_list arg, t_specifier *specifier,
+		size_t *ipart, long double *dpart);
 void						ft_putchar(va_list arg, t_specifier *specifier);
 char						is_special_cases(t_specifier *specifier,
-		unsigned int mnt, unsigned int exp, unsigned int exponenta);
+		size_t mnt, unsigned int exp, unsigned int exponenta);
 char						*rounding_ipart(t_specifier *specifier,
 		size_t ipart, long double dpart, char *buffer);
 char						*rounding_dpart(t_specifier *specifier,

@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:07:27 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/21 14:37:32 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/30 17:42:48 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ static void	ft_abs(t_specifier *specifier)
 	}
 }
 
-char		*determine_size_num(va_list arg, t_specifier *specifier, char *buffer)
+char		*determine_size_num(va_list arg, t_specifier *specifier,
+		char *buffer)
 {
 	char	*ptr;
 
@@ -57,7 +58,6 @@ char		*determine_size_num(va_list arg, t_specifier *specifier, char *buffer)
 		ptr = l_else_ll_size(arg, specifier, buffer);
 	return (ptr);
 }
-
 
 char		*nul_and_nul_size(va_list arg, t_specifier *specifier, char *buffer)
 {

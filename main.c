@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 13:12:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/29 20:04:53 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/30 18:44:46 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void	specifier_init(t_specifier *specifier)
 	specifier->num_int.num_i = 0;
 	specifier->num_int.num_l = 0;
 	specifier->num_int.num_ll = 0;
+	specifier->null_count = 0;
+	specifier->base = 10;
 }
 
 char		*ft_itoa_base(t_specifier *specifier, long int num, char *buffer)
@@ -104,21 +106,20 @@ int		ft_printf(const char *format, ...)
 	va_end(arg);
 	return (specifier.num_bytes);
 }
-
 int			main(void)
 {
 //	double 	d;
-	long double 	d;
+//	long double 	d;
 
-//	d = -1.0 / 0;
+//	d = 0.0 / 0;
 //	d = 0.5000100000000505635L;
 //	d = 0.5000035000000550025;
-	d = 0.0L / 0;
-	printf("%d\n", printf("|%Lf|", d));
-	printf("%d\n", ft_printf("|%Lf|", d));
+//	d = 0.0L / 0;
+//	printf("%d\n", printf("|%Lf|", d));
+//	printf("%d\n", ft_printf("|%Lf|", d));
 
-//	printf("%d\n", printf("|%+0500.19Lf|", LDBL_MAX));
-//	printf("%d\n", ft_printf("|%+0500.19Lf|", LDBL_MAX));
+	printf("%d\n", printf("|%x\n%+0500.19Lf\n%f|", 123456789, LDBL_MAX, DBL_MAX));
+	printf("%d\n", ft_printf("|%x\n%+0500.19Lf\n%f|", 123456789, LDBL_MAX, DBL_MAX));
 
 //	printf("%d\n", printf("|%+10.5d|", 18446744073709551615));
 //	printf("%d\n", ft_printf("|%+10.5d|", 18446744073709551615));

@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 17:20:12 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/29 20:02:32 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/30 18:44:41 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ size_t		ft_pow(size_t num, size_t n)
 	return (res);
 }
 
-char		*rounding_ipart(t_specifier *specifier, size_t ipart, long double dpart,
-		char *buffer)
+char		*rounding_ipart(t_specifier *specifier, size_t ipart,
+		long double dpart, char *buffer)
 {
 	char		*ptr;
 	long double	round;
@@ -64,19 +64,22 @@ char		*rounding_dpart(t_specifier *specifier, long double dpart,
 	return (ptr);
 }
 
-char		is_special_cases(t_specifier *specifier, unsigned int mnt,
+char		is_special_cases(t_specifier *specifier, size_t mnt,
 		unsigned int exp, unsigned int exponenta)
 {
-	if (exp == exponenta && !mnt && !specifier->num_flt_d.parts.sign)
+	if (exp == exponenta && (mnt == LONG_DOUBLE_MNT_INF
+				|| mnt == DOUBLE_MNT_INF))
 	{
-		write(1, "inf", 3);
-		specifier->num_bytes += 3;
-		return (1);
-	}
-	else if (exp == exponenta && !mnt && specifier->num_flt_d.parts.sign)
-	{
-		write(1, "-inf", 4);
-		specifier->num_bytes += 4;
+		if (specifier->sign > 0)
+		{
+			write(1, "inf", 3);
+			specifier->num_bytes += 3;
+		}
+		else if (specifier->sign < 0)
+		{
+			write(1, "-inf", 4);
+			specifier->num_bytes += 4;
+		}
 		return (1);
 	}
 	else if (exp == exponenta)
@@ -88,21 +91,23 @@ char		is_special_cases(t_specifier *specifier, unsigned int mnt,
 	return (0);
 }
 
-void		flt_plus_or_space(t_specifier *specifier)
+void		ft_putflt_long(va_list arg, t_specifier *specifier, size_t *ipart,
+		long double *dpart)
 {
-	if (specifier->sign > 0)
+	specifier->num_flt_ld.num = va_arg(arg, long double);
+	if (specifier->num_flt_ld.parts.sign)
 	{
-		if (specifier->plus)
-		{
-			write(1, "+", 1);
-			specifier->width--;
-			specifier->num_bytes++;
-		}
-		else if (specifier->space)
-		{
-			write(1, " ", 1);
-			specifier->width--;
-			specifier->num_bytes++;
-		}
+		specifier->sign = -1;
+		specifier->num_flt_ld.parts.sign = 0;
 	}
+	if (is_special_cases(specifier, specifier->num_flt_ld.parts.mantissa,
+				specifier->num_flt_ld.parts.exponenta, LONG_DOUBLE_EXP))
+		return ;
+	while (specifier->num_flt_ld.num > MAX_LONG_DOUBLE)
+	{
+		specifier->null_count++;
+		specifier->num_flt_ld.num /= 10;
+	}
+	*ipart = (size_t)(specifier->num_flt_ld.num + 1e-2);
+	*dpart = specifier->num_flt_ld.num - (long double)(*ipart) + 1;
 }

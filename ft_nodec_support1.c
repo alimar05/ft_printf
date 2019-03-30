@@ -6,33 +6,30 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 18:52:19 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/28 13:24:49 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/30 17:36:58 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	null_value(t_specifier *specifier, char *ptr, int *i)
+static void	put_null_or_space(t_specifier *specifier, char *c)
+{
+	write(1, c, 1);
+	specifier->num_bytes++;
+}
+
+void		null_value(t_specifier *specifier, char *ptr, int *i)
 {
 	if (*ptr == '0' && specifier->base == 8 && specifier->sharp
 			&& !specifier->precision)
-	{
-		write(1, "0", 1);
-		specifier->num_bytes++;
-	}
+		put_null_or_space(specifier, "0");
 	else if (*ptr == '0' && !specifier->precision && specifier->width
 			&& specifier->type != 'p')
-	{
-		write(1, " ", 1);
-		specifier->num_bytes++;
-	}
-	else if (*ptr  == '0' && specifier->type == 'p' && !specifier->precision)
+		put_null_or_space(specifier, " ");
+	else if (*ptr == '0' && specifier->type == 'p' && !specifier->precision)
 		write(1, "", 0);
 	else if (*ptr == '0' && specifier->type == 'p' && specifier->precision)
-	{
-		write(1, "0", 1);
-		specifier->num_bytes++;
-	}
+		put_null_or_space(specifier, "0");
 	else if (*ptr == '0' && !specifier->precision && !specifier->width)
 		write(1, "", 0);
 	else
@@ -42,7 +39,7 @@ void	null_value(t_specifier *specifier, char *ptr, int *i)
 	}
 }
 
-void	padding(t_specifier *specifier, int boundary, char c, int *i)
+void		padding(t_specifier *specifier, int boundary, char c, int *i)
 {
 	int		j;
 
@@ -54,7 +51,7 @@ void	padding(t_specifier *specifier, int boundary, char c, int *i)
 	}
 }
 
-void	view(t_specifier *specifier, char *ptr)
+void		view(t_specifier *specifier, char *ptr)
 {
 	if (specifier->sharp && *ptr != '0')
 	{
