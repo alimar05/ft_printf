@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/19 13:12:02 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/30 18:44:46 by rymuller         ###   ########.fr       */
+/*   Created: 2019/03/30 19:00:43 by rymuller          #+#    #+#             */
+/*   Updated: 2019/03/30 19:02:41 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <float.h>
 
 static void	specifier_init(t_specifier *specifier)
 {
@@ -81,7 +80,7 @@ char		*ft_itoa_base_uns(t_specifier *specifier, size_t num, char *buffer)
 	return (ptr);
 }
 
-int		ft_printf(const char *format, ...)
+int			ft_printf(const char *format, ...)
 {
 	va_list		arg;
 	t_specifier	specifier;
@@ -105,27 +104,4 @@ int		ft_printf(const char *format, ...)
 	}
 	va_end(arg);
 	return (specifier.num_bytes);
-}
-int			main(void)
-{
-//	double 	d;
-//	long double 	d;
-
-//	d = 0.0 / 0;
-//	d = 0.5000100000000505635L;
-//	d = 0.5000035000000550025;
-//	d = 0.0L / 0;
-//	printf("%d\n", printf("|%Lf|", d));
-//	printf("%d\n", ft_printf("|%Lf|", d));
-
-	printf("%d\n", printf("|%x\n%+0500.19Lf\n%f|", 123456789, LDBL_MAX, DBL_MAX));
-	printf("%d\n", ft_printf("|%x\n%+0500.19Lf\n%f|", 123456789, LDBL_MAX, DBL_MAX));
-
-//	printf("%d\n", printf("|%+10.5d|", 18446744073709551615));
-//	printf("%d\n", ft_printf("|%+10.5d|", 18446744073709551615));
-//	printf("%d\n", printf("|%lx|", 9223372036854775808));
-//	printf("%d\n", ft_printf("|%lx|", 9223372036854775808));
-//	printf("%d\n", printf("|%ld|", 9223372036854775808));
-//	printf("%d\n", ft_printf("|%ld|", 9223372036854775808));
-	return (0);
 }

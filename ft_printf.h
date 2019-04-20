@@ -6,7 +6,7 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 10:35:49 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/30 18:45:43 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/30 18:59:31 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@
 # define LONG_DOUBLE_MNT_INF 9223372036854775808U
 # define LONG_DOUBLE_MNT_NAN 13835058055282163712U
 # define MAX_LONG_DOUBLE 1e+20
-
-#include <stdio.h>
 
 struct						s_parts_d
 {

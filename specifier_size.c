@@ -6,11 +6,10 @@
 /*   By: rymuller <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:07:27 by rymuller          #+#    #+#             */
-/*   Updated: 2019/03/30 17:42:48 by rymuller         ###   ########.fr       */
+/*   Updated: 2019/03/30 19:02:01 by rymuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "ft_printf.h"
 
 static void	ft_abs(t_specifier *specifier)
