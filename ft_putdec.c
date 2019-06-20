@@ -14,9 +14,6 @@
 
 static void	print_minus(t_specifier *specifier, char *ptr, int *i)
 {
-	int		j;
-
-	j = *i;
 	dec_minus_sign_plus_space_dot(specifier, i);
 	write(1, ptr, *i);
 	specifier->num_bytes += *i;

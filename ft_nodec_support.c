@@ -54,9 +54,6 @@ static void	no_minus_dot(t_specifier *specifier, char *ptr, int *i)
 
 void		print_no_dec_minus(t_specifier *specifier, char *ptr, int *i)
 {
-	int		j;
-
-	j = *i;
 	if (!specifier->dot)
 	{
 		if (specifier->sharp && *ptr != '0')
@@ -72,9 +69,6 @@ void		print_no_dec_minus(t_specifier *specifier, char *ptr, int *i)
 
 void		print_no_dec_no_minus(t_specifier *specifier, char *ptr, int *i)
 {
-	int		j;
-
-	j = *i;
 	if (!specifier->null && !specifier->dot)
 	{
 		if (specifier->sharp && *ptr != '0')
